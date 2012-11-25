@@ -58,6 +58,9 @@ public class Helper {
 	}
 	
 	public static void appendNav(StringBuilder sb, Document doc) {
+		
+		sb.append(Helper.listViewDivider("¾ÉÄý"));
+		
 		// Nav
 		Elements navs = doc.select("#nav a");
 		sb.append("<div id=\"nav\")>");

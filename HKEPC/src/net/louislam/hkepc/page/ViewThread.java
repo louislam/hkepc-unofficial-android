@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.util.Log;
 
 public class ViewThread implements Page{
 
@@ -40,8 +39,10 @@ public class ViewThread implements Page{
 			time = g.select(".authorinfo em").first().html().toString().replace("µoªí©ó ", "");
 			sb.append(Helper.listViewDivider(authorName + " (" + time + ")"));
 			
+			// Remove ads
 			g.select(".adv").remove();
 			
+			// Image handling
 			imgs = g.select(".postmessage img");
 			
 			for (Element img : imgs) {
@@ -58,6 +59,7 @@ public class ViewThread implements Page{
 			
 			msg = g.select(".postmessage").html();
 			
+			// Post Content
 			item = "<li class=\"post\">" +  msg + "</li>";
 			sb.append(item);
 		}

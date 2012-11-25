@@ -1,5 +1,8 @@
 package net.louislam.hkepc;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -20,6 +23,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends HKEPC {
 
+	private Menu menu;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,9 +39,11 @@ public class MainActivity extends HKEPC {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.layout.menu, menu);
+		this.menu = menu;
 		return super.onCreateOptionsMenu(menu);
 	}
 	
+
 	/**
 	 * Menu bar actions
 	 */
@@ -56,6 +63,36 @@ public class MainActivity extends HKEPC {
 		
 		return true;
 	}
+	
+	/**
+	 * Check Login
+	 */
+	@Override
+	public void checkLogin(Document doc) {
+		Element e = doc.select("#umenu a").first();
+		
+		if (e != null && e.text().equals("µù¥U")) {
+			menu.findItem(R.id.username).setVisible(false);
+			menu.findItem(R.id.login).setVisible(true);
+			menu.findItem(R.id.logout).setVisible(false);
+		} else {
+			menu.findItem(R.id.username).setVisible(true);
+			menu.findItem(R.id.username).setTitle(e.text());
+			menu.findItem(R.id.login).setVisible(false);
+			menu.findItem(R.id.logout).setVisible(true);
+		}
+		
+		menu.findItem(R.id.post).setVisible(false);
+		menu.findItem(R.id.reply).setVisible(false);
+	}
+	
+	public void enable(int id) {
+		menu.findItem(R.id.post).setVisible(false);
+		menu.findItem(R.id.reply).setVisible(false);
+		
+		menu.findItem(id).setVisible(true);
+	}
+	
 
 	/**
 	 * For Android 4.0 only

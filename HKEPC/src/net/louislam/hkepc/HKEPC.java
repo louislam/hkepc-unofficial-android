@@ -1,9 +1,7 @@
 package net.louislam.hkepc;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Stack;
 
 import net.louislam.hkepc.page.*;
@@ -55,19 +53,27 @@ public abstract class HKEPC extends Activity {
 		new Logging()
 	};
 	
-	private static Map<String, String> cookies;
+	/** Default base url */
 	public final static String URL = "http://www.hkepc.com/forum/";
 	
+	/** WebView */
 	protected WebView webView;
+	
+	/** Page Load Task Object */
 	protected PageLoadTask task;
+	
 	protected AppLayout layout = null;
 	
 	private Stack<String> urlStack;
+	
 	private String currentUrl;
 	
 	/** Loading Dialog */
 	private ProgressDialog loadingDialog;
 	
+	/**
+	 * 
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,6 +105,7 @@ public abstract class HKEPC extends Activity {
 		loadingDialog = new ProgressDialog(this);
 		loadingDialog.setMessage("Loading");
 		loadingDialog.setIndeterminate(true);
+		loadingDialog.setCanceledOnTouchOutside(false);
 	}
 	
 	public void loadNewUrl(String url) {
@@ -137,6 +144,9 @@ public abstract class HKEPC extends Activity {
 		return (urlStack.size() != 0);
 	}
 	
+	/**
+	 * Refresh
+	 */
 	public void refresh() {
 		loadData(currentUrl);
 	}
@@ -187,20 +197,36 @@ public abstract class HKEPC extends Activity {
 			return;
 		}
 		
+		// Get Body id
 		String id = doc.select("body").attr("id");
-		
+		boolean valid = false;
 		String content = null;
 		
+		
+		// Handle page
 		for (Page p : pageHandlers) {
 			if (p.getId().equals(id) || p.getId().equals("*")) {
 				content = p.getContent(doc);
+				valid = true;
 				break;
 			}
 		}
 		
-		this.setContent(content);
-		this.loadPage();
+		if (valid) {
+			
+			// Check login 
+			checkLogin(doc);
+			
+			this.setContent(content);
+			this.loadPage();
+		}
 	}
+	
+	/**
+	 * Check Login
+	 * @param doc
+	 */
+	public abstract void checkLogin(Document doc);
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -222,7 +248,7 @@ public abstract class HKEPC extends Activity {
 	
 	
 	/**
-	 * 
+	 * PageLoadTask
 	 * @author Louis Lam
 	 */
 	class PageLoadTask extends AsyncTask<Object, Integer, Document> {

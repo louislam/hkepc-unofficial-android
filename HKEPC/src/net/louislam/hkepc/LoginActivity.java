@@ -1,22 +1,18 @@
 package net.louislam.hkepc;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
-import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
-
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
 /**
  * 
  * @author Louis Lam

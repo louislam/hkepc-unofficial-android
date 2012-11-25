@@ -16,6 +16,8 @@ public class ForumDisplay implements Page{
 		StringBuilder sb = new StringBuilder();
 		Element item;
 		Element author;
+		Element date;
+		//Element num;
 		sb.append("<ul>");
 		
 		// Nav
@@ -40,7 +42,9 @@ public class ForumDisplay implements Page{
 			
 			if (item != null) {
 				author = g.select(".author a").first();
-				item.html(item.html() + "<br /><span style=\"color: #AAA; text-decoration: none\">" + author.html() + "</span>");
+				date = g.select(".author em").first();
+				//num = g.select(".nums").first();
+				item.html(item.html() + "<br /><span style=\"color: #AAA; text-decoration: none; font-size: 0.8em\">" + author.html() + " - " +date + "</span>");
 				
 				sb.append( "<li>" + item+ "</li>");
 			} else
