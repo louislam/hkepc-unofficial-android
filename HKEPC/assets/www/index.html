@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>HKEPC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+
+
+<style>
+body{ overflow-x:hidden;}
+* { margin: 0; padding: 0; }
+p { font-size: 1.3em; line-height: 1.5em; margin-bottom: 10px; }
+a { text-decoration: none; }
+img { border: 0; max-width: 100% }
+
+h1 { font-size: 1.3em; }
+
+ul { list-style: none; font-family: "Calibri", Arial, sans-serif; }
+
+ul li { 
+	border-bottom: 1px solid #DDD; 
+	background: #fff; 
+	display: block;
+}
+
+ul li.divider {
+	background-color: #8EC31F;
+	color: #FFF;
+	padding: 8px 0px; 
+	padding-left: 10px;
+	font-size: 1.2em; 
+	font-weight: bold;
+}
+
+
+
+ul li > a { 
+	position: relative; 
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 15px 0px; 
+	padding-left: 10px;
+	padding-right: 60px;
+	text-decoration: none; 
+	font-size: 1.2em; 
+	color: #111;
+	overflow: hidden;
+}
+
+ul li .icon {height: 40px;vertical-align: middle; margin-right: 10px; }
+
+/*
+ul li > a::after {
+	content: '';
+	display: block;
+	width: 9px;
+	height: 9px;
+	border-right: 3px solid #adb46b;
+	border-top: 3px solid #adb46b;
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	margin-top: -5px;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}*/
+
+ul li > a:hover::after { border-color: #c3ca80; }
+
+.pages a, .pages strong, #nav a {
+	display: block;
+	color: #FFF;
+	background-color: #8EC31F;
+	padding: 15px;
+	margin: 5px;
+	float: left;
+}
+
+.pages strong {
+	font-weight: bold;
+	background-color: #73A30E;
+}
+
+
+.pages a.next {
+	float: none;
+	clear: both;
+	text-align: center;
+}
+
+.post {
+	padding: 10px;
+	font-size: 1.1em;
+}
+
+.pstatus { color: #DDD; font-size: 0.8em; }
+
+.quote {
+padding: 5px;
+background-color: #F9F9F9;
+}
+</style>
+
+</head>
+	<body>
+		<div class="content">{Content}</div>
+	</body>
+</html>

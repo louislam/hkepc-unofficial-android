@@ -1,0 +1,43 @@
+<form method="post" name="login" id="loginform" class="s_clear" onsubmit="pwdclear = 1;ajaxpost('loginform', 'returnmessage', 'returnmessage', 'onerror');return false;" action="logging.php?action=login&amp;loginsubmit=yes">
+<input type="hidden" name="formhash" value="068d2e2e" />
+<input type="hidden" name="referer" value="http://www.hkepc.com/forum/viewthread.php?tid=1885105&extra=page%3D1" />
+<div class="loginform nolabelform">
+<div class="float_typeid selectinput" id="account">
+<select name="loginfield" style="float:left;width:50px;" id="loginfield">
+<option value="username">用戶名</option>
+<option value="uid">UID</option>
+<option value="email">Email</option>
+</select>
+<input type="text" name="username" autocomplete="off" size="36" class="txt" tabindex="1" value="" />
+</div>
+<p class="selectinput loginpsw">
+<label for="password3">密　碼　：</label>
+<input type="password" id="password3" name="password" onfocus="clearpwd()" onkeypress="detectCapsLock(event, this)" size="36" class="txt" tabindex="1" />
+</p>
+
+<div id="seccodelayer"></div>
+
+<div class="float_typeid selecttype">
+<select id="questionid" name="questionid" change="if($('questionid').value > 0) {$('answer').style.display='';} else {$('answer').style.display='none';}">
+<option value="0">安全提問</option>
+<option value="1">母親的名字</option>
+<option value="2">爺爺的名字</option>
+<option value="3">父親出生的城市</option>
+<option value="4">您其中一位老師的名字</option>
+<option value="5">您個人計算機的型號</option>
+<option value="6">您最喜歡的餐館名稱</option>
+<option value="7">駕駛執照的最後四位數字</option>
+</select>
+</div>
+<p><input type="text" name="answer" id="answer" style="display:none" autocomplete="off" size="36" class="txt" tabindex="1" /></p>
+</div>
+<div class="logininfo multinfo">
+<h4>沒有帳號？<a href="base.php" onclick="hideWindow('login');showWindow('register', this.href);return false;" title="註冊帳號">註冊</a></h4>
+<p><a href="javascript:;" onclick="display('layer_login');display('layer_lostpw');" title="找回密碼">找回密碼</a></p>
+<p><a href="javascript:;" onclick="ajaxget('member.php?action=clearcookies&formhash=068d2e2e', 'returnmessage', 'returnmessage');return false;" title="清除痕跡">清除痕跡</a></p>
+</div>
+<p class="fsubmit s_clear">
+<button class="submit" type="submit" name="loginsubmit" value="true" tabindex="1">登錄</button>
+<input type="checkbox" class="checkbox" name="cookietime" id="cookietime" tabindex="1" value="2592000"  /> <label for="cookietime">記住我的登錄狀態</label>
+</p>
+</form>

@@ -1,0 +1,89 @@
+package net.louislam.hkepc;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+
+/**
+ * 
+ * @author Louis Lam
+ *
+ */
+public class Helper {
+
+	/** 
+	 * Load html file 
+	 * 
+	 * */
+	public static String loadHtmlFile(Context c, String path) {
+		StringBuilder sb = new StringBuilder();
+		
+		AssetManager am = c.getAssets();
+		
+		InputStream inStream = null;
+		try {
+			inStream = am.open(path);
+		} catch (IOException e) {
+		}
+		Scanner scanner = new Scanner(inStream);
+		
+		while(scanner.hasNextLine()) {
+			sb.append(scanner.nextLine());
+		}
+		
+		return sb.toString();
+	}
+	
+	public static String listViewDivider(String name) {
+		return "<li class=\"divider\">" + name + "</li>";
+	}
+	
+	public static String listViewItem(String name, String href) {
+		return "<li><a href=\"" + href + "\">" + name + "</a></li>";
+	}
+	
+	public static String listViewStartTag() {
+		return "<ul>";
+	}
+	
+	public static String li(String str) {
+		return "<li>" + str + "</li>";
+	}
+	
+	public static void appendNav(StringBuilder sb, Document doc) {
+		// Nav
+		Elements navs = doc.select("#nav a");
+		sb.append("<div id=\"nav\")>");
+		for (Element nav : navs) {
+			sb.append(nav.toString());
+		}
+		sb.append(li("<div style=\"clear:both\"></div></div>"));
+	}
+	
+	public static void appendPaging(StringBuilder sb, Document doc) {
+		Elements pagings = doc.select(".pages");
+		
+		if (pagings != null && pagings.size() > 0) {
+			Element paging = pagings.first();
+			
+			Elements prevs = paging.select(".prev");
+					
+			if (prevs != null && prevs.size() > 0) {
+				prevs.first().html("<");
+			}
+			
+			sb.append(Helper.li(paging.toString()));
+		}
+	}
+	
+	public static String clear() {
+		return "<div style=\"clear:both\"></div>";
+	}
+}
