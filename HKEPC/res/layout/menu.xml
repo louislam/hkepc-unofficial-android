@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-        <item
+
+    <item
         android:id="@+id/refresh"
-        android:title="重新整理"
+        android:showAsAction="always|withText"
+        android:title="重新整理"/>
+
+    <item
+        android:id="@+id/post"
         android:showAsAction="ifRoom|withText"
-    />
-    
+        android:title="新文章"
+         />
+
+    <item
+        android:id="@+id/reply"
+        android:showAsAction="ifRoom|withText"
+        android:title="回覆"
+        />
+
+    <item
+        android:id="@+id/username"
+        android:showAsAction="ifRoom|withText"
+        android:title="username"/>
+
+    <item
+        android:id="@+id/msg"
+        android:showAsAction="ifRoom|withText"
+        android:title="短訊"/>
+
     <item
         android:id="@+id/login"
-        android:title="登入"
         android:showAsAction="ifRoom|withText"
-    />
-    
+        android:title="登入"/>
+
+    <item
+        android:id="@+id/logout"
+        android:showAsAction="ifRoom|withText"
+        android:title="登出"/>
+
     <item
         android:id="@+id/About"
-        android:title="關於"
         android:showAsAction="ifRoom|withText"
-    />
+        android:title="關於"/>
+
 </menu>

@@ -7,7 +7,7 @@
 
 
 <style>
-body{ overflow-x:hidden;}
+body{ overflow-x:hidden; word-wrap: break-word;}
 * { margin: 0; padding: 0; }
 p { font-size: 1.3em; line-height: 1.5em; margin-bottom: 10px; }
 a { text-decoration: none; }
@@ -79,6 +79,10 @@ ul li > a:hover::after { border-color: #c3ca80; }
 	float: left;
 }
 
+#nav a {
+	background-color: #555;
+}
+
 .pages strong {
 	font-weight: bold;
 	background-color: #73A30E;
@@ -96,11 +100,13 @@ ul li > a:hover::after { border-color: #c3ca80; }
 	font-size: 1.1em;
 }
 
+
 .pstatus { color: #DDD; font-size: 0.8em; }
 
+/* Quota */
 .quote {
 padding: 5px;
-background-color: #F9F9F9;
+background-color: #DDD;
 }
 </style>
 
