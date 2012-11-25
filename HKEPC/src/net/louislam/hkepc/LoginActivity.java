@@ -17,7 +17,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-
+/**
+ * 
+ * @author Louis Lam
+ */
 public class LoginActivity extends Activity implements OnClickListener {
 	
 	private EditText username, password;
@@ -32,8 +35,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		password = (EditText) findViewById(R.id.password);
 		button = (Button) findViewById(R.id.loginButton);
 		button.setOnClickListener(this);
-		
-
 	}
 
 	public void onClick(View view) {
@@ -55,8 +56,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						    .data("username", strs[0], "password", strs[1])
 						    .method(Method.POST)
 						    .execute();
-				HKEPC.setCookies(res.cookies());
-				Log.d("Response", res.parse().html());
+				HKEPC.setCookies(res.cookies(), LoginActivity.this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

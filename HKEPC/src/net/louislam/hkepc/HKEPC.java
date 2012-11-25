@@ -14,12 +14,18 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -140,10 +146,10 @@ public abstract class HKEPC extends Activity {
 	 * @param url
 	 */
 	private void loadData(String url) {
-		//loadingDialog.show();
+		loadingDialog.show();
 		
 		task = new PageLoadTask();
-		task.execute(url, HKEPC.getCookies());
+		task.execute(url);
 	}
 	
 	/**
@@ -213,13 +219,13 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.hide();
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @author Louis Lam
 	 */
 	class PageLoadTask extends AsyncTask<Object, Integer, Document> {
-
-		@SuppressWarnings("unchecked")
 		@Override
 		protected Document doInBackground(Object... obj) {
 			
@@ -237,39 +243,16 @@ public abstract class HKEPC extends Activity {
 				}
 			}
 			
-			// Cookies
-			CookieSyncManager.getInstance().sync();
-			CookieManager cm = CookieManager.getInstance();
-			String cookie = cm.getCookie(url);
-
-			
 			try {
 				
-				if (cookie != null) {
-					conn = Jsoup.connect(url).cookie(url, cookie);
-									
+				if (HKEPC.getCookies(HKEPC.this) != null) {
+					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this));
 				} else {
 					conn = Jsoup.connect(url);
 				}
 				doc = conn.get();
-				/*
-				Map<String, String>cookies = conn.response().cookies();
-
-				Iterator<Entry<String, String>> i = cookies.entrySet().iterator();
-				Entry<String, String> pair;
-				
-				StringBuilder sb = new StringBuilder();
-				
-				 while (i.hasNext()) {
-					  pair =  i.next();
-					  sb.append(pair.getKey() + "=" + pair.getValue() + ";");
-				 }
-				 Log.d("Cookies Response", sb.toString());
-				cm.setCookie(url, sb.toString());*/
-
 			} catch (IOException e) {
-				//Log.d("Error", e.toString());
-				//return this.doInBackground(obj);
+
 			}
 
 			return doc;
@@ -306,13 +289,38 @@ public abstract class HKEPC extends Activity {
 			
 		}
 	}
-	
-	public static Map<String, String> getCookies() {
-		return HKEPC.cookies;
-	}
-	
-	public static void setCookies(Map<String, String> cookies) {
-		HKEPC.cookies = cookies;
+
+	/**
+	 * @return the cookies
+	 */
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getCookies(Context c) {
+		  SharedPreferences appSharedPrefs = PreferenceManager
+		  .getDefaultSharedPreferences(c);
+		  Gson gson = new Gson();
+		  String json = appSharedPrefs.getString("Cookies", "");
+		  return gson.fromJson(json, Map.class);
+		
+		//return cookies;
 	}
 
+	/**
+	 * @param cookies the cookies to set
+	 */
+	public static void setCookies(Map<String, String> cookies, Context c) {
+		
+		SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
+		Editor prefsEditor = appSharedPrefs.edit();
+		
+		Gson gson = new Gson();
+		
+		String json = gson.toJson(cookies);
+		prefsEditor.putString("Cookies", json);
+		prefsEditor.commit();
+		
+		//HKEPC.cookies = cookies;
+	}
+	
+	
+	
 }

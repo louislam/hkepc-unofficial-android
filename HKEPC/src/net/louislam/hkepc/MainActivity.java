@@ -46,7 +46,9 @@ public class MainActivity extends HKEPC {
 
 		// Login Button
 		if (item.getItemId() == R.id.login) {
-			this.loadNewUrl(HKEPC.URL + "logging.php?action=login");
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			//this.loadNewUrl(HKEPC.URL + "logging.php?action=login");
 	                
 		} else if (item.getItemId() == R.id.refresh) {
 			this.refresh();
