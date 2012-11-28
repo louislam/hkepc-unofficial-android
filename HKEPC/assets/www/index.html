@@ -3,7 +3,7 @@
 <head>
 <title>HKEPC</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+
 
 
 <style>
@@ -30,18 +30,14 @@ ul li.divider {
 	padding-left: 10px;
 	font-size: 1.1em; 
 	font-weight: bold;
+	border-width: 0;
 }
 
-
-
 ul li > a { 
-	position: relative; 
 	display: block;
-	box-sizing: border-box;
-	width: 100%;
-	padding: 15px 0px; 
+	padding: 15px 0px;
 	padding-left: 10px;
-	padding-right: 60px;
+	padding-right: 10px;
 	text-decoration: none; 
 	font-size: 1.2em; 
 	color: #111;
@@ -49,24 +45,6 @@ ul li > a {
 }
 
 ul li .icon {height: 40px;vertical-align: middle; margin-right: 10px; }
-
-/*
-ul li > a::after {
-	content: '';
-	display: block;
-	width: 9px;
-	height: 9px;
-	border-right: 3px solid #adb46b;
-	border-top: 3px solid #adb46b;
-	position: absolute;
-	right: 20px;
-	top: 50%;
-	margin-top: -5px;
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-	transform: rotate(45deg);
-}*/
 
 ul li > a:hover::after { border-color: #c3ca80; }
 
@@ -81,6 +59,7 @@ ul li > a:hover::after { border-color: #c3ca80; }
 
 #nav a {
 	background-color: #555;
+	width:80%;
 }
 
 .pages strong {
@@ -105,8 +84,8 @@ ul li > a:hover::after { border-color: #c3ca80; }
 
 /* Quota */
 .quote {
-padding: 5px;
-background-color: #DDD;
+	padding: 5px;
+	background-color: #EEE;
 }
 </style>
 

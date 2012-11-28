@@ -8,13 +8,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-public class ViewThread implements Page{
+public class ViewThread extends Page {
 
 	public String getId() {
 		return "viewthread";
 	}
 
 	public String getContent(Document doc) {
+		
+		if (doc.select(".replybtn").size() > 0) {
+			a.showPanel();
+		} else {
+			a.hidePanel();
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ul>");
 		String item;
@@ -37,7 +44,7 @@ public class ViewThread implements Page{
 			// Author Details
 			authorName = g.select(".postauthor .postinfo a").first().text();
 			time = g.select(".authorinfo em").first().html().toString().replace("µoªí©ó ", "");
-			sb.append(Helper.listViewDivider(authorName + " (" + time + ")"));
+			sb.append("<li class=\"divider\">" + authorName + " (" + time + ")</li>");
 			
 			// Remove ads
 			g.select(".adv").remove();

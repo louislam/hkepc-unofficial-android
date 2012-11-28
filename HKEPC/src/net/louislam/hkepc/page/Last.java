@@ -3,7 +3,7 @@ package net.louislam.hkepc.page;
 import org.jsoup.nodes.Document;
 
 
-public class Last implements Page{
+public class Last extends Page {
 
 	public String getId() {
 		return "*";

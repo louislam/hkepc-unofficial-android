@@ -14,6 +14,7 @@ import org.jsoup.nodes.Document;
 
 import com.google.gson.Gson;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -29,8 +31,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 /**
  * HKEPC Activity Base Class
@@ -40,12 +44,10 @@ import android.webkit.WebViewClient;
 public abstract class HKEPC extends Activity {
 	
 	/** Page Handler */
-	private static final Page[] pageHandlers = { 
+	protected static final Page[] pageHandlers = { 
 		new Index(), 
 		new ForumDisplay(), 
-		new ViewThread(), 
-		
-		new Last()
+		new ViewThread()
 	};
 	
 	/** Url Handler */
@@ -84,6 +86,10 @@ public abstract class HKEPC extends Activity {
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setAllowFileAccess(true);
+		webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+		//webView.getSettings().setBlockNetworkImage(true);
+		//webView.getSettings().setEnableSmoothTransition(true);
+		//webView.getSettings().setAppCacheEnabled(true);
 
 		webView.setWebViewClient(new WebViewClient() {
 			    @Override 
@@ -108,8 +114,11 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.setCanceledOnTouchOutside(false);
 	}
 	
+	/**
+	 * Load New Url
+	 * @param url
+	 */
 	public void loadNewUrl(String url) {
-		
 		// Not hkepc forum
 		if ( ! url.contains("hkepc.com/forum")) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -119,17 +128,23 @@ public abstract class HKEPC extends Activity {
 		
 		if (currentUrl != null) {
 			urlStack.add(currentUrl);
-		}		
+		}	
 		
-		currentUrl = url;
 		loadData(url);
+	}
+	
+	@Override
+	protected void onResume() {
+		this.refresh();
+		super.onResume();
 	}
 	
 	/**
 	 * Go back to the previous page
 	 */
-	public void goBack() {
+	public void goBack() {		
 		loadingDialog.show();
+		
 		if (canGoBack()) {
 			currentUrl = urlStack.pop();
 			this.loadData(currentUrl);
@@ -157,6 +172,9 @@ public abstract class HKEPC extends Activity {
 	 */
 	private void loadData(String url) {
 		loadingDialog.show();
+		
+		// Set the current url
+		currentUrl = url;
 		
 		task = new PageLoadTask();
 		task.execute(url);
@@ -189,11 +207,15 @@ public abstract class HKEPC extends Activity {
 	
 	/**
 	 * Page Load Done
+	 * When the process reach here, it assumes that all pages are hkepc pages.
 	 * @param doc
 	 */
-	public void pageLoadDone(Document doc) {
+	public void pageLoadDone(Document doc, String url) {
+		
+		// If the document is nothing.
 		if (doc == null) {
 			loadingDialog.hide();
+			Toast.makeText(getApplicationContext(), "無法連接到 HKEPC。", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -202,10 +224,9 @@ public abstract class HKEPC extends Activity {
 		boolean valid = false;
 		String content = null;
 		
-		
 		// Handle page
 		for (Page p : pageHandlers) {
-			if (p.getId().equals(id) || p.getId().equals("*")) {
+			if (p.getId().equals(id)) {
 				content = p.getContent(doc);
 				valid = true;
 				break;
@@ -213,20 +234,24 @@ public abstract class HKEPC extends Activity {
 		}
 		
 		if (valid) {
-			
-			// Check login 
-			checkLogin(doc);
-			
-			this.setContent(content);
-			this.loadPage();
+		
+		// Get Simple Content
+		} else {
+			content = (new Last()).getContent(doc);
 		}
+		
+		this.setContent(content);
+		this.loadPage();
+		//loadingDialog.hide();
 	}
 	
 	/**
 	 * Check Login
 	 * @param doc
 	 */
-	public abstract void checkLogin(Document doc);
+	public abstract void checkLogin(Document doc, String url);
+	
+	public abstract void controlUI(Document doc, String url);
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -246,42 +271,42 @@ public abstract class HKEPC extends Activity {
 	}
 	
 	
-	
 	/**
 	 * PageLoadTask
 	 * @author Louis Lam
 	 */
-	class PageLoadTask extends AsyncTask<Object, Integer, Document> {
+	class PageLoadTask extends AsyncTask<String, Integer, Object[]> {
 		@Override
-		protected Document doInBackground(Object... obj) {
-			
-			if (obj[0] == null)
-				return null;
+		protected Object[] doInBackground(String... obj) {
+			Connection conn = null;
 			
 			String url = (String) obj[0];
 			
-			Connection conn = null;
-			Document doc = null;
+			Object[] returnObjs = new Object[2];
+			returnObjs[1] = url;
+			
+			if (obj[0] == null)
+				return returnObjs;
 			
 			for (UrlHandler h : urlHandlers) {	
 				if (url.contains(h.getUrlMatch())) {
-					return h.handle(HKEPC.this, url);
+					returnObjs[0] = h.handle(HKEPC.this, url);
+					return returnObjs;
 				}
 			}
 			
 			try {
-				
 				if (HKEPC.getCookies(HKEPC.this) != null) {
 					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this));
 				} else {
 					conn = Jsoup.connect(url);
 				}
-				doc = conn.get();
+				returnObjs[0] = conn.get();
 			} catch (IOException e) {
-
+				//returnObjs[0] = Jsoup.parse("<div>Cannot connect to HKEPC</div>");
 			}
-
-			return doc;
+			
+			return returnObjs;
 		}
 
 		// This is called each time you call publishProgress()
@@ -291,31 +316,16 @@ public abstract class HKEPC extends Activity {
 
 		// This is called when doInBackground() is finished
 		@Override
-		protected void onPostExecute(Document doc) {
-			pageLoadDone(doc);
+		protected void onPostExecute(Object[] obj) {
+			Document doc = (Document) obj[0];
+			String url = (String) obj[1];
+			pageLoadDone(doc, url);
+			
+			checkLogin(doc, url);
+			controlUI(doc, url);
 		}
 	}
 	
-	class WebViewTask extends AsyncTask<Object, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Object... obj) {
-			WebView webView = (WebView) obj[0];
-			String html = (String) obj[1];
-			webView.loadDataWithBaseURL(URL, html, "text/html", "utf-8", "");
-			return null;
-		}
-		
-		protected void onProgressUpdate(Void... v) {
-
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			
-		}
-	}
-
 	/**
 	 * @return the cookies
 	 */

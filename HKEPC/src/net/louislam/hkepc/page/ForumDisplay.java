@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ForumDisplay implements Page{
+public class ForumDisplay extends Page {
 
 	public String getId() {
 		return "forumdisplay";

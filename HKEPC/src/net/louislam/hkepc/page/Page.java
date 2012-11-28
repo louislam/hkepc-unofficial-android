@@ -1,10 +1,18 @@
 package net.louislam.hkepc.page;
 
+import net.louislam.hkepc.MainActivity;
+
 import org.jsoup.nodes.Document;
 
-public interface Page {
+public abstract class Page {
 
-	public String getId();
-	public String getContent(Document doc);
+	protected MainActivity a;
+	
+	public abstract String getId();
+	public abstract String getContent(Document doc);
+	
+	public void setMainActivity(MainActivity a) {
+		this.a = a;
+	}
 	
 }

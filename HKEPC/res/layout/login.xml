@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical" 
     android:padding="30dp"
-    android:background="#FFFFFF">
-
+>
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
 
         <requestFocus />
     </EditText>
-
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -26,7 +25,6 @@
         android:inputType="textPassword"
         android:hint="Password"
         />
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"

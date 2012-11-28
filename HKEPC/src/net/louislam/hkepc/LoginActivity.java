@@ -5,9 +5,15 @@ import java.io.IOException;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,13 +43,45 @@ public class LoginActivity extends Activity implements OnClickListener {
 		(new LoginTask()).execute(username.getText().toString(), password.getText().toString());
 	}
 	
+	public void done(Connection.Response res) {
+		
+		boolean isOk = false;
+		String msg = "Error!";
+		
+		if (res != null) {
+			Document doc = null;
+			try {
+				doc = res.parse();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Element alert = doc.select(".alert_info").first();
+			
+			if (alert != null && alert.text().contains("歡迎您回來")) {
+				HKEPC.setCookies(res.cookies(), this);
+				isOk = true;
+			}
+			
+			msg = alert.text();
+		}
+		
+		if (isOk) {
+			this.finish();
+		} else {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setMessage(msg);
+			dialog.show();
+		}
+	}
+	
 	/**
 	 * 
 	 * @author Louis Lam
 	 */
-	class LoginTask extends AsyncTask<String, Void, Void> {
+	class LoginTask extends AsyncTask<String, Void, Connection.Response> {
 		@Override
-		protected Void doInBackground(String... strs) {
+		protected Connection.Response doInBackground(String... strs) {
 			String page = "logging.php?action=login&loginsubmit=yes&floatlogin=yes";
 			
 			Connection.Response res = null;
@@ -52,12 +90,23 @@ public class LoginActivity extends Activity implements OnClickListener {
 						    .data("username", strs[0], "password", strs[1])
 						    .method(Method.POST)
 						    .execute();
-				HKEPC.setCookies(res.cookies(), LoginActivity.this);
+				
+				Document doc = res.parse();
+
+				String veryLongString = doc.html();
+				int maxLogSize = 1000;
+				    for(int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
+				        int start = i * maxLogSize;
+				        int end = (i+1) * maxLogSize;
+				        end = end > veryLongString.length() ? veryLongString.length() : end;
+				        Log.v("HTML", veryLongString.substring(start, end));
+				    }
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			return null;
+			return res;
 		}
 
 		// This is called each time you call publishProgress()
@@ -67,7 +116,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		// This is called when doInBackground() is finished
 		@Override
-		protected void onPostExecute(Void v) {
+		protected void onPostExecute(Connection.Response b) {
+			done(b);
 		}
 	}	
 
