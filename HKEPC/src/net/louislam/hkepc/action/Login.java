@@ -15,7 +15,7 @@ public class Login implements Action {
 	@Override
 	public void action(MainActivity a) {
 		Intent intent = new Intent(a, LoginActivity.class);
-		a.startActivity(intent);
+		a.startActivityForResult(intent, 1234);
 	}
 
 }

@@ -47,11 +47,13 @@ public abstract class HKEPC extends Activity {
 	protected static final Page[] pageHandlers = { 
 		new Index(), 
 		new ForumDisplay(), 
-		new ViewThread()
+		new ViewThread(),
+		new Space(),
+		new Search()
 	};
 	
 	/** Url Handler */
-	private static final UrlHandler[] urlHandlers = {
+	protected static final UrlHandler[] urlHandlers = {
 		new Logging()
 	};
 	
@@ -85,8 +87,8 @@ public abstract class HKEPC extends Activity {
 
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.getSettings().setAllowFileAccess(true);
-		webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+		//webView.getSettings().setAllowFileAccess(true);
+		//webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		//webView.getSettings().setBlockNetworkImage(true);
 		//webView.getSettings().setEnableSmoothTransition(true);
 		//webView.getSettings().setAppCacheEnabled(true);
@@ -111,7 +113,7 @@ public abstract class HKEPC extends Activity {
 		loadingDialog = new ProgressDialog(this);
 		loadingDialog.setMessage("Loading");
 		loadingDialog.setIndeterminate(true);
-		loadingDialog.setCanceledOnTouchOutside(false);
+		loadingDialog.setCanceledOnTouchOutside(true);
 	}
 	
 	/**
@@ -135,7 +137,6 @@ public abstract class HKEPC extends Activity {
 	
 	@Override
 	protected void onResume() {
-		this.refresh();
 		super.onResume();
 	}
 	
@@ -270,6 +271,14 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.hide();
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Login
+		if (requestCode == 1234 && resultCode == RESULT_OK) {
+			this.refresh();
+		}
+	}
+	
 	
 	/**
 	 * PageLoadTask
@@ -281,6 +290,7 @@ public abstract class HKEPC extends Activity {
 			Connection conn = null;
 			
 			String url = (String) obj[0];
+			//Log.d("URL", url);
 			
 			Object[] returnObjs = new Object[2];
 			returnObjs[1] = url;
@@ -297,9 +307,9 @@ public abstract class HKEPC extends Activity {
 			
 			try {
 				if (HKEPC.getCookies(HKEPC.this) != null) {
-					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this));
+					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this)).timeout(20000);
 				} else {
-					conn = Jsoup.connect(url);
+					conn = Jsoup.connect(url).timeout(20000);
 				}
 				returnObjs[0] = conn.get();
 			} catch (IOException e) {

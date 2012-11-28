@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -27,12 +28,29 @@ public class MainActivity extends HKEPC {
 	private Menu menu;
 	private LinearLayout panel;
 	
+	private String mySpaceUrl;
+	
 	private final Action[] actions = {
 		new Login(),
 		new Logout(),
-		new Refresh()
+		new Refresh(),
+		new MySpace()
 	};
 	
+	/**
+	 * @return the mySpaceUrl
+	 */
+	public String getMySpaceUrl() {
+		return mySpaceUrl;
+	}
+
+	/**
+	 * @param mySpaceUrl the mySpaceUrl to set
+	 */
+	public void setMySpaceUrl(String mySpaceUrl) {
+		this.mySpaceUrl = mySpaceUrl;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,6 +67,7 @@ public class MainActivity extends HKEPC {
 		}
 		//openOptionsMenu();
 		this.loadNewUrl(HKEPC.URL);
+		
 	}
 	
 	@Override
@@ -122,6 +141,8 @@ public class MainActivity extends HKEPC {
 		} else {
 			menu.findItem(R.id.username).setVisible(true);
 			menu.findItem(R.id.username).setTitle(e.text());
+			this.setMySpaceUrl(HKEPC.URL + e.attr("href"));
+			
 			menu.findItem(R.id.login).setVisible(false);
 			menu.findItem(R.id.logout).setVisible(true);
 			menu.findItem(R.id.msg).setVisible(true);
@@ -163,5 +184,12 @@ public class MainActivity extends HKEPC {
 		cd.setColor(Color.rgb(142, 195, 31));
 		
 		bar.setBackgroundDrawable(cd);
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  //setContentView(R.layout.activity_main);
+	  Log.d("hihi", "hihi");
 	}
 }

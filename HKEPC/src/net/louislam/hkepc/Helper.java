@@ -61,15 +61,14 @@ public class Helper {
 		
 		sb.append(Helper.listViewDivider("¾ÉÄý"));
 		
-		sb.append("<li class=\"divider\">");
 		// Nav
 		Elements navs = doc.select("#nav a");
-		sb.append("<div id=\"nav\")>");
+		//sb.append("<div id=\"nav\")>");
 		for (Element nav : navs) {
-			sb.append(nav.toString());
+			sb.append("<li>" + nav.toString() + "</li>");
 		}
-		sb.append("<div style=\"clear:both\"></div></div>");
-		sb.append("</li>");
+		//sb.append("<div style=\"clear:both\"></div></div>");
+
 	}
 	
 	public static void appendPaging(StringBuilder sb, Document doc) {

@@ -67,6 +67,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 		
 		if (isOk) {
+			setResult(RESULT_OK);
 			this.finish();
 		} else {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
