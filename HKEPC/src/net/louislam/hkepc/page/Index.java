@@ -7,6 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 public class Index extends Page {
 
 	public String getId() {
@@ -35,10 +37,11 @@ public class Index extends Page {
 				name = a.text();
 
 				img = current.select(".icon img").first();
-				img.attr("src", HKEPC.URL + img.attr("src"));
+				img.attr("src", img.attr("src"));
 				img.addClass("icon");
 				
 				sb.append("<li>" + "<a href=\"" + href + "\">" + img +  name + "</a></li>");
+				Log.d("img", "<li>" + "<a href=\"" + href + "\">" + img +  name + "</a></li>");
 				current = current.nextElementSibling();
 			}
 		}

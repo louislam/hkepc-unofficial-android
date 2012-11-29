@@ -1,6 +1,8 @@
 package net.louislam.hkepc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -10,6 +12,7 @@ import net.louislam.hkepc.urlhandler.*;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
 
 import com.google.gson.Gson;
@@ -43,6 +46,8 @@ import android.widget.Toast;
  */
 public abstract class HKEPC extends Activity {
 	
+	public static List<DocumentCache> docCacheList;
+	
 	/** Page Handler */
 	protected static final Page[] pageHandlers = { 
 		new Index(), 
@@ -68,10 +73,41 @@ public abstract class HKEPC extends Activity {
 	
 	protected AppLayout layout = null;
 	
-	private Stack<String> urlStack;
+	private Stack<Content> contentStack;
 	
-	private String currentUrl;
+	private Content currentContent;
 	
+	private String replyUrl;
+	private String replyFormHash;
+	
+	/**
+	 * @return the replyFormHash
+	 */
+	public String getReplyFormHash() {
+		return replyFormHash;
+	}
+
+	/**
+	 * @param replyFormHash the replyFormHash to set
+	 */
+	public void setReplyFormHash(String replyFormHash) {
+		this.replyFormHash = replyFormHash;
+	}
+
+	/**
+	 * @return the replyUrl
+	 */
+	public String getReplyUrl() {
+		return replyUrl;
+	}
+
+	/**
+	 * @param replyUrl the replyUrl to set
+	 */
+	public void setReplyUrl(String replyUrl) {
+		this.replyUrl = replyUrl;
+	}
+
 	/** Loading Dialog */
 	private ProgressDialog loadingDialog;
 	
@@ -83,16 +119,12 @@ public abstract class HKEPC extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		urlStack = new Stack<String>();
-
+		docCacheList = new ArrayList<DocumentCache>();
+		contentStack = new Stack<Content>();
+		
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
-		//webView.getSettings().setAllowFileAccess(true);
-		//webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-		//webView.getSettings().setBlockNetworkImage(true);
-		//webView.getSettings().setEnableSmoothTransition(true);
-		//webView.getSettings().setAppCacheEnabled(true);
-
+		
 		webView.setWebViewClient(new WebViewClient() {
 			    @Override 
 			    public boolean shouldOverrideUrlLoading(WebView view, String url) { 
@@ -127,17 +159,12 @@ public abstract class HKEPC extends Activity {
 			startActivity(browserIntent);
 			return;
 		}
-		
-		if (currentUrl != null) {
-			urlStack.add(currentUrl);
+	
+		if (currentContent != null) {
+			contentStack.add(currentContent);
 		}	
 		
 		loadData(url);
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
 	}
 	
 	/**
@@ -147,8 +174,8 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.show();
 		
 		if (canGoBack()) {
-			currentUrl = urlStack.pop();
-			this.loadData(currentUrl);
+			currentContent = contentStack.pop();
+			this.loadData(currentContent.getUrl(), true);
 		}
 	}
 	
@@ -157,14 +184,14 @@ public abstract class HKEPC extends Activity {
 	 * @return
 	 */
 	public boolean canGoBack() {
-		return (urlStack.size() != 0);
+		return (contentStack.size() != 0);
 	}
 	
 	/**
 	 * Refresh
 	 */
 	public void refresh() {
-		loadData(currentUrl);
+		loadData(currentContent.getUrl());
 	}
 	
 	/**
@@ -172,13 +199,24 @@ public abstract class HKEPC extends Activity {
 	 * @param url
 	 */
 	private void loadData(String url) {
+		this.loadData(url, false);
+	}
+	
+	private void loadData(String url, boolean getFromCache) {
 		loadingDialog.show();
 		
 		// Set the current url
-		currentUrl = url;
+		currentContent = new Content();
+		currentContent.setUrl(url);
+		
+		String isCache;
+		if (getFromCache)
+			isCache = "Y";
+		else
+			isCache = "N";
 		
 		task = new PageLoadTask();
-		task.execute(url);
+		task.execute(url, isCache);		
 	}
 	
 	/**
@@ -204,6 +242,10 @@ public abstract class HKEPC extends Activity {
 	 */
 	public void setContent(String content) {
 		layout.content(content);
+	}
+	
+	public String getContent() {
+		return layout.content();
 	}
 	
 	/**
@@ -241,6 +283,7 @@ public abstract class HKEPC extends Activity {
 			content = (new Last()).getContent(doc);
 		}
 		
+		currentContent.setContent(content);
 		this.setContent(content);
 		this.loadPage();
 		//loadingDialog.hide();
@@ -263,14 +306,6 @@ public abstract class HKEPC extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	public void showLoading() {
-		loadingDialog.show();
-	}
-	
-	public void hideLoading() {
-		loadingDialog.hide();
-	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Login
@@ -278,7 +313,6 @@ public abstract class HKEPC extends Activity {
 			this.refresh();
 		}
 	}
-	
 	
 	/**
 	 * PageLoadTask
@@ -290,7 +324,7 @@ public abstract class HKEPC extends Activity {
 			Connection conn = null;
 			
 			String url = (String) obj[0];
-			//Log.d("URL", url);
+			String isCache = (String) obj[1];
 			
 			Object[] returnObjs = new Object[2];
 			returnObjs[1] = url;
@@ -298,10 +332,21 @@ public abstract class HKEPC extends Activity {
 			if (obj[0] == null)
 				return returnObjs;
 			
+			// URL Handlers
 			for (UrlHandler h : urlHandlers) {	
 				if (url.contains(h.getUrlMatch())) {
 					returnObjs[0] = h.handle(HKEPC.this, url);
 					return returnObjs;
+				}
+			}
+			
+			// Get it from cache
+			if (isCache == "Y") {
+				for (DocumentCache d : docCacheList) {
+					if (d.getUrl() == url) {
+						returnObjs[0] = d.getDocument();
+						return returnObjs;
+					}
 				}
 			}
 			
@@ -312,6 +357,12 @@ public abstract class HKEPC extends Activity {
 					conn = Jsoup.connect(url).timeout(20000);
 				}
 				returnObjs[0] = conn.get();
+				
+				DocumentCache dc = new DocumentCache();
+				dc.setDocument((new DocumentCloner()).cloneDocument((Document) returnObjs[0]));
+				dc.setUrl(url);
+				docCacheList.add(dc);
+				
 			} catch (IOException e) {
 				//returnObjs[0] = Jsoup.parse("<div>Cannot connect to HKEPC</div>");
 			}
@@ -329,32 +380,67 @@ public abstract class HKEPC extends Activity {
 		protected void onPostExecute(Object[] obj) {
 			Document doc = (Document) obj[0];
 			String url = (String) obj[1];
-			pageLoadDone(doc, url);
 			
+			pageLoadDone(doc, url);
 			checkLogin(doc, url);
 			controlUI(doc, url);
 		}
 	}
+	
+	class ReplyTask extends AsyncTask<String, Void, Connection.Response> {
+		@Override
+		protected Connection.Response doInBackground(String... strs) {
+			String page = strs[0];
+			String formHash = strs[1];
+			String msg = strs[2];
+			Connection.Response res = null;
+			
+			try {
+				res = Jsoup.connect(HKEPC.URL + page)
+						.cookies(HKEPC.getCookies(HKEPC.this))
+						.data("message", msg, "formhash", formHash)
+						.method(Method.POST)
+						.execute();		
+				Helper.log(res.parse().toString());
+			} catch (IOException e) { }
+						
+			return res;
+		}
+
+		protected void onProgressUpdate(Void... progress) {}
+
+		@Override
+		protected void onPostExecute(Connection.Response b) {
+			HKEPC.this.refresh();
+			replyDone();
+		}
+	}	
+	
+	public abstract void replyDone();
+	
+	public void showLoading() {
+		loadingDialog.show();
+	}
+	
+	public void hideLoading() {
+		loadingDialog.hide();
+	}	
 	
 	/**
 	 * @return the cookies
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> getCookies(Context c) {
-		  SharedPreferences appSharedPrefs = PreferenceManager
-		  .getDefaultSharedPreferences(c);
+		  SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
 		  Gson gson = new Gson();
 		  String json = appSharedPrefs.getString("Cookies", "");
 		  return gson.fromJson(json, Map.class);
-		
-		//return cookies;
 	}
 
 	/**
 	 * @param cookies the cookies to set
 	 */
 	public static void setCookies(Map<String, String> cookies, Context c) {
-		
 		SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
 		Editor prefsEditor = appSharedPrefs.edit();
 		
@@ -363,8 +449,6 @@ public abstract class HKEPC extends Activity {
 		String json = gson.toJson(cookies);
 		prefsEditor.putString("Cookies", json);
 		prefsEditor.commit();
-		
-		//HKEPC.cookies = cookies;
 	}
 	
 	

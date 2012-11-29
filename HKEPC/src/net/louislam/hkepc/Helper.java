@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 /**
  * 
@@ -89,5 +90,15 @@ public class Helper {
 	
 	public static String clear() {
 		return "<div style=\"clear:both\"></div>";
+	}
+	
+	public static void log(String veryLongString) {
+		int maxLogSize = 1000;
+		    for(int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
+		        int start = i * maxLogSize;
+		        int end = (i+1) * maxLogSize;
+		        end = end > veryLongString.length() ? veryLongString.length() : end;
+		        Log.v("HTML", veryLongString.substring(start, end));
+		    }
 	}
 }

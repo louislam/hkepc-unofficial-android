@@ -16,11 +16,14 @@ public class ViewThread extends Page {
 
 	public String getContent(Document doc) {
 		
+		// Show Reply panel
 		if (doc.select(".replybtn").size() > 0) {
 			a.showPanel();
-		} else {
-			a.hidePanel();
 		}
+		
+		// Get Reply Form post url
+		a.setReplyUrl(doc.select("#fastpostform").attr("action"));
+		a.setReplyFormHash(doc.select("input[name=formhash]").attr("value"));
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ul>");

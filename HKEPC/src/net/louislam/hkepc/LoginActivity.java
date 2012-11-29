@@ -91,18 +91,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 						    .data("username", strs[0], "password", strs[1])
 						    .method(Method.POST)
 						    .execute();
-				
-				Document doc = res.parse();
-
-				String veryLongString = doc.html();
-				int maxLogSize = 1000;
-				    for(int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
-				        int start = i * maxLogSize;
-				        int end = (i+1) * maxLogSize;
-				        end = end > veryLongString.length() ? veryLongString.length() : end;
-				        Log.v("HTML", veryLongString.substring(start, end));
-				    }
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

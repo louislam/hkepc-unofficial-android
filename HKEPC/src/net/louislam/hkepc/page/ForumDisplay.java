@@ -17,7 +17,7 @@ public class ForumDisplay extends Page {
 		Element item;
 		Element author;
 		Element date;
-		//Element num;
+		Element num;
 		sb.append("<ul>");
 		
 		// Nav
@@ -25,7 +25,6 @@ public class ForumDisplay extends Page {
 		
 		// Sub Forum
 		Elements subForums = doc.select("table[summary=subform] h2 a");
-		
 		if (subForums.size() >= 1) {
 			sb.append(Helper.listViewDivider("¤lª©¶ô"));
 		}
@@ -43,10 +42,15 @@ public class ForumDisplay extends Page {
 			if (item != null) {
 				author = g.select(".author a").first();
 				date = g.select(".author em").first();
-				//num = g.select(".nums").first();
-				item.html(item.html() + "<br /><span style=\"color: #AAA; text-decoration: none; font-size: 0.8em\">" + author.html() + " - " +date + "</span>");
+				num = g.select(".nums").first();
+				sb.append("<li>");
 				
-				sb.append( "<li>" + item+ "</li>");
+				sb.append(item.html(item.html() + 
+						"<br /><span class=\"box\">" + author.html() + "</span> " +
+						"<span class=\"box\">" + date + "</span> " +
+						"<span class=\"box\">" + num + "</span> "));
+				
+				sb.append("</li>");
 			} else
 				sb.append(Helper.listViewDivider(""));
 		}

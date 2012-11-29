@@ -17,16 +17,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 /**
  * MainActivity
  * @author Louis Lam
  */
-public class MainActivity extends HKEPC {
+public class MainActivity extends HKEPC implements OnClickListener {
 
 	private Menu menu;
 	private LinearLayout panel;
+	private Button replyButton;
+	private EditText replyEditText;
 	
 	private String mySpaceUrl;
 	
@@ -36,6 +42,30 @@ public class MainActivity extends HKEPC {
 		new Refresh(),
 		new MySpace()
 	};
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		replyButton = (Button) findViewById(R.id.replyButton);
+		replyButton.setOnClickListener(this);
+		replyEditText = (EditText) findViewById(R.id.replyEditText);
+		
+		for(Page p : pageHandlers) {
+			p.setMainActivity(this);
+		}
+		
+		panel = (LinearLayout) findViewById(R.id.panel);
+		panel.setVisibility(LinearLayout.GONE);
+		
+		if (Build.VERSION.SDK_INT >= 11) {
+			styleActionBar();
+		}
+		//openOptionsMenu();
+		this.loadNewUrl(HKEPC.URL);
+		
+	}
+	
 	
 	/**
 	 * @return the mySpaceUrl
@@ -50,24 +80,11 @@ public class MainActivity extends HKEPC {
 	public void setMySpaceUrl(String mySpaceUrl) {
 		this.mySpaceUrl = mySpaceUrl;
 	}
-
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		for(Page p : pageHandlers) {
-			p.setMainActivity(this);
-		}
-		
-		panel = (LinearLayout) findViewById(R.id.panel);
-		panel.setVisibility(LinearLayout.GONE);
-		
-		if (Build.VERSION.SDK_INT >= 11) {
-			styleActionBar();
-		}
-		//openOptionsMenu();
-		this.loadNewUrl(HKEPC.URL);
-		
+	public void pageLoadDone(Document doc, String url) {
+		this.hidePanel();
+		super.pageLoadDone(doc, url);
 	}
 	
 	@Override
@@ -158,11 +175,13 @@ public class MainActivity extends HKEPC {
 	}
 	
 	public void showPanel() {
-		panel.setVisibility(LinearLayout.VISIBLE);
+		if (panel.getVisibility() == LinearLayout.GONE)
+			panel.setVisibility(LinearLayout.VISIBLE);
 	}
 	
 	public void hidePanel() {
-		panel.setVisibility(LinearLayout.GONE);
+		if (panel.getVisibility() == LinearLayout.VISIBLE)
+			panel.setVisibility(LinearLayout.GONE);
 	}
 	
 	public void enable(int id) {
@@ -192,4 +211,28 @@ public class MainActivity extends HKEPC {
 	  //setContentView(R.layout.activity_main);
 	  Log.d("hihi", "hihi");
 	}
+
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.replyButton) {
+
+			if (replyEditText.getText().toString().equals("")) {
+				return;
+			}
+			
+			replyButton.setEnabled(false);
+			
+			(new ReplyTask()).execute(this.getReplyUrl(), this.getReplyFormHash(), replyEditText.getText().toString());
+		}
+	}
+
+
+	@Override
+	public void replyDone() {
+		// TODO Auto-generated method stub
+		replyEditText.setText("");
+		replyButton.setEnabled(true);
+	}
+	
+	
 }
