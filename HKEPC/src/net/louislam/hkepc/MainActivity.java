@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	
 	private String mySpaceUrl;
 	
+	private boolean hasLoggedIn;
+	
 	private final Action[] actions = {
 		new Login(),
 		new Logout(),
@@ -51,19 +54,26 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		replyButton.setOnClickListener(this);
 		replyEditText = (EditText) findViewById(R.id.replyEditText);
 		
+		panel = (LinearLayout) findViewById(R.id.panel);
+		panel.setVisibility(LinearLayout.GONE);		
+		
 		for(Page p : pageHandlers) {
 			p.setMainActivity(this);
 		}
 		
-		panel = (LinearLayout) findViewById(R.id.panel);
-		panel.setVisibility(LinearLayout.GONE);
-		
 		if (Build.VERSION.SDK_INT >= 11) {
 			styleActionBar();
 		}
-		//openOptionsMenu();
-		this.loadNewUrl(HKEPC.URL);
 		
+		//openOptionsMenu();
+		
+		Uri data = getIntent().getData();
+		
+		if (data == null)
+			this.loadNewUrl(HKEPC.URL);
+		else {
+			this.loadNewUrl(data.toString());
+		}
 	}
 	
 	
@@ -83,8 +93,16 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	
 	@Override
 	public void pageLoadDone(Document doc, String url) {
-		this.hidePanel();
 		super.pageLoadDone(doc, url);
+	}
+	
+	@Override
+	public void webViewPageLoadDone() {
+		if (hasLoggedIn && currentContent.getUrl().contains("viewthread.php")) {
+			this.showPanel();
+		} else {
+			this.hidePanel();
+		}		
 	}
 	
 	@Override
@@ -129,7 +147,9 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		if (doc != null)
 			e = doc.select("#umenu a").first();
 		
-		return ! (doc == null || e == null || e.text().equals("µù¥U"));
+		hasLoggedIn = ! (doc == null || e == null || e.text().equals("µù¥U"));
+		
+		return hasLoggedIn;
 	}
 
 	/**

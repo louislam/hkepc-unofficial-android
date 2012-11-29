@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings.LayoutAlgorithm;
@@ -45,8 +46,6 @@ import android.widget.Toast;
  *
  */
 public abstract class HKEPC extends Activity {
-	
-	public static List<DocumentCache> docCacheList;
 	
 	/** Page Handler */
 	protected static final Page[] pageHandlers = { 
@@ -75,7 +74,7 @@ public abstract class HKEPC extends Activity {
 	
 	private Stack<Content> contentStack;
 	
-	private Content currentContent;
+	protected Content currentContent;
 	
 	private String replyUrl;
 	private String replyFormHash;
@@ -118,13 +117,12 @@ public abstract class HKEPC extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		docCacheList = new ArrayList<DocumentCache>();
+
 		contentStack = new Stack<Content>();
 		
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
-		
+		webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		webView.setWebViewClient(new WebViewClient() {
 			    @Override 
 			    public boolean shouldOverrideUrlLoading(WebView view, String url) { 
@@ -135,7 +133,8 @@ public abstract class HKEPC extends Activity {
 			    @Override
 			    public void onPageFinished(WebView view, String url) {
 				    super.onPageFinished(view, url);
-				    loadingDialog.hide();
+				    webViewPageLoadDone();
+				    //loadingDialog.hide();
 			    }
 		});
 		
@@ -147,6 +146,8 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.setIndeterminate(true);
 		loadingDialog.setCanceledOnTouchOutside(true);
 	}
+	
+	public abstract void webViewPageLoadDone();
 	
 	/**
 	 * Load New Url
@@ -175,7 +176,7 @@ public abstract class HKEPC extends Activity {
 		
 		if (canGoBack()) {
 			currentContent = contentStack.pop();
-			this.loadData(currentContent.getUrl(), true);
+			this.loadData(currentContent.getUrl());
 		}
 	}
 	
@@ -194,29 +195,15 @@ public abstract class HKEPC extends Activity {
 		loadData(currentContent.getUrl());
 	}
 	
-	/**
-	 * Call a background task to load hkepc page data
-	 * @param url
-	 */
 	private void loadData(String url) {
-		this.loadData(url, false);
-	}
-	
-	private void loadData(String url, boolean getFromCache) {
 		loadingDialog.show();
 		
 		// Set the current url
 		currentContent = new Content();
 		currentContent.setUrl(url);
-		
-		String isCache;
-		if (getFromCache)
-			isCache = "Y";
-		else
-			isCache = "N";
-		
+	
 		task = new PageLoadTask();
-		task.execute(url, isCache);		
+		task.execute(url);		
 	}
 	
 	/**
@@ -324,8 +311,7 @@ public abstract class HKEPC extends Activity {
 			Connection conn = null;
 			
 			String url = (String) obj[0];
-			String isCache = (String) obj[1];
-			
+
 			Object[] returnObjs = new Object[2];
 			returnObjs[1] = url;
 			
@@ -339,17 +325,7 @@ public abstract class HKEPC extends Activity {
 					return returnObjs;
 				}
 			}
-			
-			// Get it from cache
-			if (isCache == "Y") {
-				for (DocumentCache d : docCacheList) {
-					if (d.getUrl() == url) {
-						returnObjs[0] = d.getDocument();
-						return returnObjs;
-					}
-				}
-			}
-			
+
 			try {
 				if (HKEPC.getCookies(HKEPC.this) != null) {
 					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this)).timeout(20000);
@@ -357,12 +333,7 @@ public abstract class HKEPC extends Activity {
 					conn = Jsoup.connect(url).timeout(20000);
 				}
 				returnObjs[0] = conn.get();
-				
-				DocumentCache dc = new DocumentCache();
-				dc.setDocument((new DocumentCloner()).cloneDocument((Document) returnObjs[0]));
-				dc.setUrl(url);
-				docCacheList.add(dc);
-				
+
 			} catch (IOException e) {
 				//returnObjs[0] = Jsoup.parse("<div>Cannot connect to HKEPC</div>");
 			}
@@ -378,12 +349,15 @@ public abstract class HKEPC extends Activity {
 		// This is called when doInBackground() is finished
 		@Override
 		protected void onPostExecute(Object[] obj) {
+			HKEPC.this.hideLoading();
 			Document doc = (Document) obj[0];
 			String url = (String) obj[1];
 			
 			pageLoadDone(doc, url);
 			checkLogin(doc, url);
 			controlUI(doc, url);
+			
+			
 		}
 	}
 	
@@ -401,7 +375,7 @@ public abstract class HKEPC extends Activity {
 						.data("message", msg, "formhash", formHash)
 						.method(Method.POST)
 						.execute();		
-				Helper.log(res.parse().toString());
+				//Helper.log(res.parse().toString());
 			} catch (IOException e) { }
 						
 			return res;
