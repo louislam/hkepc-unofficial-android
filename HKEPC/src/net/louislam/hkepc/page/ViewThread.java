@@ -32,6 +32,7 @@ public class ViewThread extends Page {
 		String time;
 		String msg;
 		Elements imgs;
+		//Element profilePic;
 		
 		// Nav
 		Helper.appendNav(sb, doc);
@@ -42,12 +43,17 @@ public class ViewThread extends Page {
 		posts.select(".useraction").remove();
 		posts.select(".imgtitle").remove();
 		
+		// For each post
 		for (Element g : posts) {
 			
 			// Author Details
 			authorName = g.select(".postauthor .postinfo a").first().text();
 			time = g.select(".authorinfo em").first().html().toString().replace("µoªí©ó ", "");
-			sb.append("<li class=\"divider\">" + authorName + " (" + time + ")</li>");
+			//profilePic = g.select(".popavatar img").first();
+			
+			sb.append("<li class=\"divider\">" + authorName + " (" + time + ")<br />");
+			sb.append(g.select(".postact em"));
+			sb.append("</li>");
 			
 			// Remove ads
 			g.select(".adv").remove();
@@ -77,6 +83,9 @@ public class ViewThread extends Page {
 		// Paging
 		Helper.appendPaging(sb, doc);
 		sb.append(Helper.clear());
+		
+		// Print Error
+		sb.append(Helper.li(doc.select(".alert_error").html()));
 		
 		sb.append("</ul>");
 		return sb.toString();

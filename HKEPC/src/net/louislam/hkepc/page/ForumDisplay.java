@@ -23,6 +23,14 @@ public class ForumDisplay extends Page {
 		// Nav
 		Helper.appendNav(sb, doc);
 		
+		// Function
+		Element postBtn = doc.select("#newspecial").first();
+		
+		if (postBtn != null) {
+			sb.append(Helper.listViewDivider("е\пр"));
+			sb.append(Helper.li(postBtn.html()));
+		}
+		
 		// Sub Forum
 		Elements subForums = doc.select("table[summary=subform] h2 a");
 		if (subForums.size() >= 1) {
@@ -35,7 +43,7 @@ public class ForumDisplay extends Page {
 		
 		// Post List
 		Elements groups = doc.select(".datatable tbody");
-
+		
 		for (Element g : groups) {
 			item = g.select(".subject span a").first();
 			
@@ -51,13 +59,17 @@ public class ForumDisplay extends Page {
 						"<span class=\"box\">" + num + "</span> "));
 				
 				sb.append("</li>");
-			} else
+			} else {
 				sb.append(Helper.listViewDivider(""));
+			}
 		}
 		
 		// Paging
 		Helper.appendPaging(sb, doc);
 		sb.append(Helper.clear());
+		
+		// Print Error
+		sb.append(Helper.li(doc.select(".alert_error").html()));
 		
 		sb.append("</ul>");
 			

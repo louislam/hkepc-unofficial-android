@@ -32,6 +32,11 @@
         android:id="@+id/login"
         android:showAsAction="ifRoom|withText"
         android:title="登入"/>
+    
+    <item
+        android:id="@+id/viewInBrowser"
+        android:showAsAction="ifRoom|withText"
+        android:title="桌面版網站"/>
 
     <item
         android:id="@+id/logout"

@@ -58,6 +58,18 @@ public class Helper {
 		return "<li>" + str + "</li>";
 	}
 	
+	public static String li(String str, String bgColorCode, String textColorCode) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<li style=\"background-color: ");
+		sb.append(bgColorCode);
+		sb.append("; color:");
+		sb.append(textColorCode);
+		sb.append(";\">");
+		sb.append(str);
+		sb.append("</li>");
+		return sb.toString();
+	}
+	
 	public static void appendNav(StringBuilder sb, Document doc) {
 		
 		sb.append(Helper.listViewDivider("¾ÉÄý"));

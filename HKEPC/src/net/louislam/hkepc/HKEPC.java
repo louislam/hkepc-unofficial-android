@@ -45,7 +45,7 @@ import android.widget.Toast;
  * @author Louis Lam
  *
  */
-public abstract class HKEPC extends Activity {
+public abstract class HKEPC extends Activity  {
 	
 	/** Page Handler */
 	protected static final Page[] pageHandlers = { 
@@ -53,7 +53,8 @@ public abstract class HKEPC extends Activity {
 		new ForumDisplay(), 
 		new ViewThread(),
 		new Space(),
-		new Search()
+		new Search(),
+		new Post()
 	};
 	
 	/** Url Handler */
@@ -135,6 +136,11 @@ public abstract class HKEPC extends Activity {
 				    super.onPageFinished(view, url);
 				    webViewPageLoadDone();
 				    //loadingDialog.hide();
+			    }
+			    
+			    @Override
+			    public void onLoadResource(WebView view, String url) {
+				    super.onLoadResource(view, url);
 			    }
 		});
 		
@@ -268,6 +274,12 @@ public abstract class HKEPC extends Activity {
 		// Get Simple Content
 		} else {
 			content = (new Last()).getContent(doc);
+		}
+		
+		// if no content, do not load it into webview
+		if (content == null) {
+			currentContent = contentStack.pop();
+			return;
 		}
 		
 		currentContent.setContent(content);
@@ -425,6 +437,8 @@ public abstract class HKEPC extends Activity {
 		prefsEditor.commit();
 	}
 	
-	
+	public String getCurrentUrl() {
+		return this.currentContent.getUrl();
+	}
 	
 }

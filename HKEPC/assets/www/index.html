@@ -1,28 +1,16 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>HKEPC</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-
-<style>
+<!DOCTYPE HTML><html><head><title>HKEPC</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><style>
 body{ overflow-x:hidden; word-wrap: break-word;}
 * { margin: 0; padding: 0; }
 p { font-size: 1.3em; line-height: 1.5em; margin-bottom: 10px; }
 a { text-decoration: none; }
 img { border: 0; max-width: 100%; }
-
 h1 { font-size: 1.3em; }
-
 ul { list-style: none; font-family: "Calibri", Arial, sans-serif; }
-
 ul li { 
 	border-bottom: 1px solid #DDD; 
 	background: #fff; 
 	display: block;
 }
-
 ul li.divider {
 	background-color: #8EC31F;
 	color: #FFF;
@@ -32,7 +20,10 @@ ul li.divider {
 	font-weight: bold;
 	border-width: 0;
 }
-
+ul li.divider a {
+	color: white;
+	text-decoration: underline;
+}
 ul li > a { 
 	display: block;
 	padding: 15px 0px;
@@ -43,11 +34,11 @@ ul li > a {
 	color: #111;
 	overflow: hidden;
 }
-
+ul li > p {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 ul li .icon {height: 40px;vertical-align: middle; margin-right: 10px; }
-
-ul li > a:hover::after { border-color: #c3ca80; }
-
 .pages a, .pages strong, #nav a {
 	display: block;
 	color: #FFF;
@@ -56,12 +47,10 @@ ul li > a:hover::after { border-color: #c3ca80; }
 	margin: 5px;
 	float: left;
 }
-
 .pages strong {
 	font-weight: bold;
 	background-color: #73A30E;
 }
-
 
 .pages a.next {
 	float: none;
@@ -74,7 +63,6 @@ ul li > a:hover::after { border-color: #c3ca80; }
 	font-size: 1.1em;
 }
 
-
 .pstatus { color: #DDD; font-size: 0.8em; }
 
 /* Quota */
@@ -83,12 +71,5 @@ ul li > a:hover::after { border-color: #c3ca80; }
 	background-color: #EEE;
 }
 
-.box {  border-radius: 5px; padding: 2px ;color: #AAA; text-decoration: none; font-size: 0.8em; }
-
-</style>
-
-</head>
-	<body>
-		<div class="content">{Content}</div>
-	</body>
-</html>
+.box { border-radius: 5px; padding: 2px ;color: #AAA; text-decoration: none; font-size: 0.8em; }
+</style></head><body><div class="content">{Content}</div></body></html>

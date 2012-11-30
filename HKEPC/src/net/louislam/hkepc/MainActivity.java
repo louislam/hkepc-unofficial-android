@@ -43,7 +43,10 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new Login(),
 		new Logout(),
 		new Refresh(),
-		new MySpace()
+		new MySpace(),
+		new About(),
+		new Home(),
+		new DesktopWebsite()
 	};
 
 	@Override
@@ -98,9 +101,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	
 	@Override
 	public void webViewPageLoadDone() {
-		if (hasLoggedIn && currentContent.getUrl().contains("viewthread.php")) {
-			this.showPanel();
-		} else {
+		if (! (hasLoggedIn && currentContent.getUrl().contains("viewthread.php"))) {
 			this.hidePanel();
 		}		
 	}
@@ -207,10 +208,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	public void enable(int id) {
 		menu.findItem(R.id.post).setVisible(false);
 		menu.findItem(R.id.reply).setVisible(false);
-		
 		menu.findItem(id).setVisible(true);
 	}
-	
 
 	/**
 	 * For Android 4.0 only
@@ -221,15 +220,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 		ColorDrawable cd = new ColorDrawable();
 		cd.setColor(Color.rgb(142, 195, 31));
-		
 		bar.setBackgroundDrawable(cd);
-	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
-	  //setContentView(R.layout.activity_main);
-	  Log.d("hihi", "hihi");
+		bar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
