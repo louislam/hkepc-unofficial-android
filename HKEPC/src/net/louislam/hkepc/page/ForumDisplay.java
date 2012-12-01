@@ -13,12 +13,15 @@ public class ForumDisplay extends Page {
 	}
 
 	public String getContent(Document doc) {
+		
+		boolean first = true;
+		
 		StringBuilder sb = new StringBuilder();
 		Element item;
 		Element author;
 		Element date;
 		Element num;
-		sb.append("<ul>");
+		sb.append("<div class=\"padding\"><ul>");
 		
 		// Nav
 		Helper.appendNav(sb, doc);
@@ -41,6 +44,9 @@ public class ForumDisplay extends Page {
 			sb.append("<li>" + sub + "</li>");
 		}
 		
+		sb.append("</ul></div>");
+		sb.append("<ul>");
+		
 		// Post List
 		Elements groups = doc.select(".datatable tbody");
 		
@@ -59,8 +65,13 @@ public class ForumDisplay extends Page {
 						"<span class=\"box\">" + num + "</span> "));
 				
 				sb.append("</li>");
-			} else {
-				sb.append(Helper.listViewDivider(""));
+			} else {	
+				if (first) {
+					sb.append(Helper.listViewDivider("¸m³»¤å³¹"));
+					first = false;
+				} else {
+					sb.append(Helper.listViewDivider("¤å³¹"));
+				}	
 			}
 		}
 		

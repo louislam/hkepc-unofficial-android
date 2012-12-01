@@ -311,6 +311,10 @@ public abstract class HKEPC extends Activity  {
 		if (requestCode == 1234 && resultCode == RESULT_OK) {
 			this.refresh();
 		}
+		
+		if (requestCode == R.layout.post && resultCode == RESULT_OK) {
+			this.refresh();
+		}
 	}
 	
 	/**

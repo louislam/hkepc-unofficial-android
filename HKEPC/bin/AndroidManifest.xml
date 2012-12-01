@@ -34,7 +34,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
+            </intent-filter>
             -->
         </activity>
         <activity android:name="net.louislam.hkepc.LoginActivity" >
@@ -47,6 +47,10 @@
         <activity
             android:name="net.louislam.hkepc.PostActivity"
             android:label="@string/title_activity_post" >
+        </activity>
+        <activity
+            android:name="net.louislam.hkepc.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

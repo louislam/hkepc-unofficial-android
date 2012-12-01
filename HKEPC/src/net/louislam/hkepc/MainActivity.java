@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -51,8 +52,22 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		if (Build.VERSION.SDK_INT >= 11) {
+			
+		} else {
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
+		
 		super.onCreate(savedInstanceState);
-
+		
+		if (Build.VERSION.SDK_INT >= 11) {
+			styleActionBar();
+		} else {
+			LinearLayout fakeBar = (LinearLayout) findViewById(R.id.fakeBar);
+			fakeBar.setVisibility(LinearLayout.VISIBLE);
+		}
+		
 		replyButton = (Button) findViewById(R.id.replyButton);
 		replyButton.setOnClickListener(this);
 		replyEditText = (EditText) findViewById(R.id.replyEditText);
@@ -64,9 +79,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			p.setMainActivity(this);
 		}
 		
-		if (Build.VERSION.SDK_INT >= 11) {
-			styleActionBar();
-		}
+
 		
 		//openOptionsMenu();
 		
@@ -165,11 +178,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		
 		// Have not login
 		if ( ! this.hasLoggedIn(doc)) {
-			
-			for (int i = 0; i <menu.size(); i++) {
-				Log.v("Item", menu.getItem(i).getTitle().toString());
-			}
-			
 			menu.findItem(R.id.username).setVisible(false);
 			menu.findItem(R.id.login).setVisible(true);
 			menu.findItem(R.id.logout).setVisible(false);
@@ -186,8 +194,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			menu.findItem(R.id.msg).setVisible(true);
 		}
 		
-		menu.findItem(R.id.post).setVisible(false);
-		menu.findItem(R.id.reply).setVisible(false);
 	}
 	
 	@Override
@@ -204,12 +210,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		if (panel.getVisibility() == LinearLayout.VISIBLE)
 			panel.setVisibility(LinearLayout.GONE);
 	}
-	
-	public void enable(int id) {
-		menu.findItem(R.id.post).setVisible(false);
-		menu.findItem(R.id.reply).setVisible(false);
-		menu.findItem(id).setVisible(true);
-	}
+
 
 	/**
 	 * For Android 4.0 only

@@ -33,7 +33,46 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="20dp"
-        android:text="本應用程式不會收集何個人資料，不信任者切勿登入。" />
+        android:text="版本: 1.0 (Beta)" />
 
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="5dp"
+        android:text="SVN Builds: 12" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="程式設計者:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Louis Lam"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:autoLink="web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"   
+        android:textAppearance="?android:attr/textAppearanceMedium"     
+        android:text="http://louislam.net" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+          android:layout_marginTop="40dp"
+        android:text="註: 本程式屬非官方程式。本程式不會收集任何個人資料或經第三方何服器。" />
+ 
 </LinearLayout>

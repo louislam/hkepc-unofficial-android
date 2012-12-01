@@ -15,9 +15,11 @@ public class ViewThread extends Page {
 	}
 
 	public String getContent(Document doc) {
+
+		Elements replybtns = doc.select(".replybtn");
 		
 		// Show Reply panel
-		if (doc.select(".replybtn").size() > 0) {
+		if (replybtns.size() > 0) {
 			a.showPanel();
 		}
 		
@@ -26,7 +28,7 @@ public class ViewThread extends Page {
 		a.setReplyFormHash(doc.select("input[name=formhash]").attr("value"));
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("<ul>");
+		
 		String item;
 		String authorName;
 		String time;
@@ -35,13 +37,24 @@ public class ViewThread extends Page {
 		//Element profilePic;
 		
 		// Nav
+		sb.append("<div class=\"padding\"><ul>");
 		Helper.appendNav(sb, doc);
+		
+		
+		if (replybtns.size() > 0) {
+			sb.append(Helper.listViewDivider("е\пр"));
+			sb.append(Helper.li(replybtns.first().html()));
+		}
+		
+		sb.append("</ul></div>");
 		
 		Elements posts = doc.select("#postlist > div");
 		
 		// Remove User Reaction function
 		posts.select(".useraction").remove();
 		posts.select(".imgtitle").remove();
+		
+		sb.append("<ul>");
 		
 		// For each post
 		for (Element g : posts) {
