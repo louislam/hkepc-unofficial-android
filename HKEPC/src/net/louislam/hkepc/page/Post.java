@@ -40,7 +40,7 @@ public class Post extends Page {
 			}
 			
 			if ( ! input.attr("name").equals("")) {
-				Log.d("KEY", input.attr("name") +": "+ input.attr("value"));
+				//Log.d("KEY", input.attr("name") +": "+ input.attr("value"));
 				data.put(input.attr("name"), input.attr("value"));
 			}
 		}
@@ -48,13 +48,14 @@ public class Post extends Page {
 		String textarea = doc.select("#e_textarea").text();
 		
 		// For Reply Title
+		/*
 		Elements replyTitles = doc.select("#subjecthide");
 		
 		if (replyTitles.size() > 0) {
 			Element replyTitle = replyTitles.first();
 			replyTitle.select("a").remove();
 			data.put("subject", replyTitle.text());
-		}
+		}*/
 		
 		Intent intent = new Intent(a, PostActivity.class);
 		intent.putExtra("data", data);

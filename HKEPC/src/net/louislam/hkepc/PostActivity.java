@@ -57,9 +57,10 @@ public class PostActivity extends Activity implements OnClickListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onClick(View v) {
+		postButton.setEnabled(false);
+		postButton.setText("¶Ç°e¤¤...");
+		
 		data.put("subject", titleEditText.getText().toString());
-		
-		
 		String content = contentEditText.getText().toString();
 		
 		if (isMobileCheckBox.isChecked()) {
@@ -73,7 +74,7 @@ public class PostActivity extends Activity implements OnClickListener {
 	}
 	
 	public void done(Response res) {
-		
+
 		//Helper.log(res.parse().html());
 
 		setResult(RESULT_OK);

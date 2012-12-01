@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="5dp"
-        android:text="SVN Builds: 12" />
+        android:text="SVN Builds: 15" />
 
     <TextView
         android:id="@+id/TextView02"
