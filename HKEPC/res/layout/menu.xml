@@ -15,7 +15,13 @@
         android:id="@+id/msg"
         android:showAsAction="ifRoom|withText"
         android:title="短訊 [開發中]"/>
-
+    
+    <item
+        android:id="@+id/savingMode"
+        android:showAsAction="ifRoom|withText"
+        android:title="節流模式"
+        android:checkable="true" />
+    
     <item
         android:id="@+id/login"
         android:showAsAction="ifRoom|withText"
@@ -25,6 +31,8 @@
         android:id="@+id/viewInBrowser"
         android:showAsAction="ifRoom|withText"
         android:title="桌面版網站"/>
+    
+    
 
     <!-- 
     <item

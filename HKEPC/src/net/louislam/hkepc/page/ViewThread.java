@@ -1,5 +1,6 @@
 package net.louislam.hkepc.page;
 
+import net.louislam.hkepc.AppSettings;
 import net.louislam.hkepc.HKEPC;
 import net.louislam.hkepc.Helper;
 
@@ -83,6 +84,23 @@ public class ViewThread extends Page {
 
 				if ( ! img.attr("src").startsWith("http")) {
 					img.attr("src", HKEPC.URL + img.attr("src"));
+				}
+			}
+				
+			if (AppSettings.get(this.a, "SavingMode").equals("true")) {
+				String link;
+				
+				for (Element img : imgs) {
+					
+					// Icon not hide
+					if (img.hasAttr("smilieid")) {
+						continue;
+					}
+					
+					link = img.attr("src");
+					
+					img.after("<a target=\"_blank\" href=\"" + link + "\">[¹Ï¤ù]</a>");
+					img.remove();
 				}
 			}
 			

@@ -10,7 +10,7 @@ public class AppSettings {
 	public static String get(Context c, String key) {
 		  SharedPreferences appSharedPrefs = PreferenceManager
 		  .getDefaultSharedPreferences(c);
-		  return appSharedPrefs.getString(key, "");
+		  return appSharedPrefs.getString(key, "false");
 	}
 
 	public static void set(Context c, String key, String value) {

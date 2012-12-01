@@ -62,6 +62,11 @@ public abstract class HKEPC extends Activity  {
 		new Logging()
 	};
 	
+	/** File Format */
+	public static final String[] fileFormats = {
+		"png", "jpg", "jpeg", "gif", "bmp", "tiff", "tif"
+	};
+	
 	/** Default base url */
 	public final static String URL = "http://www.hkepc.com/forum/";
 	
@@ -80,6 +85,22 @@ public abstract class HKEPC extends Activity  {
 	private String replyUrl;
 	private String replyFormHash;
 	
+	
+	
+	/**
+	 * @return the webView
+	 */
+	public WebView getWebView() {
+		return webView;
+	}
+
+	/**
+	 * @param webView the webView to set
+	 */
+	public void setWebView(WebView webView) {
+		this.webView = webView;
+	}
+
 	/**
 	 * @return the replyFormHash
 	 */
@@ -123,7 +144,9 @@ public abstract class HKEPC extends Activity  {
 		
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
+		//webView.getSettings().setBlockNetworkImage(true);
 		webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+		
 		webView.setWebViewClient(new WebViewClient() {
 			    @Override 
 			    public boolean shouldOverrideUrlLoading(WebView view, String url) { 
@@ -160,8 +183,18 @@ public abstract class HKEPC extends Activity  {
 	 * @param url
 	 */
 	public void loadNewUrl(String url) {
-		// Not hkepc forum
-		if ( ! url.contains("hkepc.com/forum")) {
+		
+		boolean isImage = false;
+		
+		for (String format : fileFormats) {
+			if (url.endsWith(format)) {
+				isImage = true;
+				break;
+			}
+		}
+		
+		// Not hkepc forum or image
+		if ( isImage || ! url.contains("hkepc.com/forum")) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			startActivity(browserIntent);
 			return;

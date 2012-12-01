@@ -47,7 +47,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new MySpace(),
 		new About(),
 		new Home(),
-		new DesktopWebsite()
+		new DesktopWebsite(),
+		new SavingMode()
 	};
 
 	@Override
@@ -136,6 +137,10 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		inflater.inflate(R.layout.menu, menu);
 		this.menu = menu;
 
+		if (AppSettings.get(this, "SavingMode").equals("true")) {
+			menu.findItem(R.id.savingMode).setChecked(true);
+		}
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -155,6 +160,24 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		return true;
 	}
 	
+	
+	
+	/**
+	 * @return the menu
+	 */
+	public Menu getMenu() {
+		return menu;
+	}
+
+
+	/**
+	 * @param menu the menu to set
+	 */
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+
 	public boolean hasLoggedIn(Document doc) {
 		Element e = null;
 		
