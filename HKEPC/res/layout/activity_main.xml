@@ -1,11 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+         >
+
+
+<LinearLayout 
     android:id="@+id/container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    >
 
+   
+
+    
   <LinearLayout
          android:id="@+id/fakeBar"
         android:layout_width="match_parent"
@@ -58,3 +67,14 @@
     </LinearLayout>
 
 </LinearLayout>
+
+     <ProgressBar
+         android:id="@+id/loading_icon"
+         style="?android:attr/progressBarStyleLarge"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_centerVertical="true" 
+               android:visibility="gone"	/>
+
+</RelativeLayout>

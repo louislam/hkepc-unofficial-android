@@ -43,7 +43,7 @@ public class ViewThread extends Page {
 		
 		
 		if (replybtns.size() > 0) {
-			sb.append(Helper.listViewDivider("¥\¯à"));
+			sb.append(Helper.listViewDivider("åŠŸèƒ½"));
 			sb.append(Helper.li(replybtns.first().html()));
 		}
 		
@@ -62,7 +62,7 @@ public class ViewThread extends Page {
 			
 			// Author Details
 			authorName = g.select(".postauthor .postinfo a").first().text();
-			time = g.select(".authorinfo em").first().html().toString().replace("µoªí©ó ", "");
+			time = g.select(".authorinfo em").first().html().toString().replace("ç™¼è¡¨æ–¼ ", "");
 			//profilePic = g.select(".popavatar img").first();
 			
 			sb.append("<li class=\"divider\">" + authorName + " (" + time + ")<br />");
@@ -99,7 +99,7 @@ public class ViewThread extends Page {
 					
 					link = img.attr("src");
 					
-					img.after("<a target=\"_blank\" href=\"" + link + "\">[¹Ï¤ù]</a>");
+					img.after("<a target=\"_blank\" href=\"" + link + "\">[åœ–ç‰‡]</a>");
 					img.remove();
 				}
 			}

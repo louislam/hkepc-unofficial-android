@@ -24,26 +24,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="HKEPC Android"
+            android:text="HKEPC (非官方版)"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="20dp"
         android:text="版本: 1.0 (Beta)" />
-
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginTop="5dp"
-        android:text="SVN Builds: 15" />
 
     <TextView
         android:id="@+id/TextView02"

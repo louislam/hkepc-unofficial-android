@@ -58,7 +58,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 			Element alert = doc.select(".alert_info").first();
 			
-			if (alert != null && alert.text().contains("Åwªï±z¦^¨Ó")) {
+			if (alert != null && alert.text().contains("æ­¡è¿Žæ‚¨å›žä¾†")) {
 				HKEPC.setCookies(res.cookies(), this);
 				isOk = true;
 			}

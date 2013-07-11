@@ -72,7 +72,7 @@ public class Helper {
 	
 	public static void appendNav(StringBuilder sb, Document doc) {
 		
-		sb.append(Helper.listViewDivider("¾ÉÄý"));
+		sb.append(Helper.listViewDivider("å°Žè¦½"));
 		
 		// Nav
 		Elements navs = doc.select("#nav a");

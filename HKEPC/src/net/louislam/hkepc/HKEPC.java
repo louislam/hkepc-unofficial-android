@@ -1,24 +1,21 @@
 package net.louislam.hkepc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import android.app.Activity;
 import net.louislam.hkepc.page.*;
 import net.louislam.hkepc.urlhandler.*;
-
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
 
+
 import com.google.gson.Gson;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,18 +23,14 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
@@ -45,7 +38,7 @@ import android.widget.Toast;
  * @author Louis Lam
  *
  */
-public abstract class HKEPC extends Activity  {
+public abstract class HKEPC extends Activity {
 	
 	/** Page Handler */
 	protected static final Page[] pageHandlers = { 
@@ -84,6 +77,8 @@ public abstract class HKEPC extends Activity  {
 	
 	private String replyUrl;
 	private String replyFormHash;
+	
+	private ProgressBar loadingIcon;
 	
 	
 	
@@ -174,6 +169,7 @@ public abstract class HKEPC extends Activity  {
 		loadingDialog.setMessage("Loading");
 		loadingDialog.setIndeterminate(true);
 		loadingDialog.setCanceledOnTouchOutside(true);
+
 	}
 	
 	public abstract void webViewPageLoadDone();
@@ -284,7 +280,7 @@ public abstract class HKEPC extends Activity  {
 		// If the document is nothing.
 		if (doc == null) {
 			loadingDialog.hide();
-			Toast.makeText(getApplicationContext(), "µLªk³s±µ¨ì HKEPC¡C", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "ç„¡æ³•é€£æŽ¥åˆ° HKEPCã€‚", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -440,11 +436,17 @@ public abstract class HKEPC extends Activity  {
 	}	
 	
 	public abstract void replyDone();
-	
+
+	/**
+	 * Show Load Dialog
+	 */
 	public void showLoading() {
 		loadingDialog.show();
 	}
-	
+
+	/**
+	 * Hide Loading Dialog
+	 */
 	public void hideLoading() {
 		loadingDialog.hide();
 	}	
@@ -473,7 +475,11 @@ public abstract class HKEPC extends Activity  {
 		prefsEditor.putString("Cookies", json);
 		prefsEditor.commit();
 	}
-	
+
+	/**
+	 * Get current url
+	 * @return
+	 */
 	public String getCurrentUrl() {
 		return this.currentContent.getUrl();
 	}

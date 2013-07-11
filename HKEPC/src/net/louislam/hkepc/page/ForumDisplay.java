@@ -30,14 +30,14 @@ public class ForumDisplay extends Page {
 		Element postBtn = doc.select("#newspecial").first();
 		
 		if (postBtn != null) {
-			sb.append(Helper.listViewDivider("¥\¯à"));
+			sb.append(Helper.listViewDivider("åŠŸèƒ½"));
 			sb.append(Helper.li(postBtn.html()));
 		}
 		
 		// Sub Forum
 		Elements subForums = doc.select("table[summary=subform] h2 a");
 		if (subForums.size() >= 1) {
-			sb.append(Helper.listViewDivider("¤lª©¶ô"));
+			sb.append(Helper.listViewDivider("å­ç‰ˆå¡Š"));
 		}
 		
 		for (Element sub : subForums) {
@@ -67,10 +67,10 @@ public class ForumDisplay extends Page {
 				sb.append("</li>");
 			} else {	
 				if (first) {
-					sb.append(Helper.listViewDivider("¸m³»¤å³¹"));
+					sb.append(Helper.listViewDivider("ç½®é ‚æ–‡ç« "));
 					first = false;
 				} else {
-					sb.append(Helper.listViewDivider("¤å³¹"));
+					sb.append(Helper.listViewDivider("æ–‡ç« "));
 				}	
 			}
 		}

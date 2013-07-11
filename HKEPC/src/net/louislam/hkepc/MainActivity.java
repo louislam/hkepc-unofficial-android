@@ -1,5 +1,7 @@
 package net.louislam.hkepc;
 
+import android.app.ActionBar;
+import android.view.*;
 import net.louislam.hkepc.action.*;
 import net.louislam.hkepc.page.Page;
 
@@ -7,7 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,15 +16,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 /**
  * MainActivity
@@ -31,15 +29,27 @@ import android.widget.LinearLayout;
  */
 public class MainActivity extends HKEPC implements OnClickListener {
 
+	/** Menu Object */
 	private Menu menu;
+
+	/** */
 	private LinearLayout panel;
+
+	/** */
 	private Button replyButton;
+
+	/** */
 	private EditText replyEditText;
-	
+
+	/** */
 	private String mySpaceUrl;
-	
+
+	/** */
 	private boolean hasLoggedIn;
-	
+
+	/**
+	 * Actions
+	 */
 	private final Action[] actions = {
 		new Login(),
 		new Logout(),
@@ -51,6 +61,10 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new SavingMode()
 	};
 
+	/**
+	 *
+	 * @param savedInstanceState
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -72,18 +86,13 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		replyButton = (Button) findViewById(R.id.replyButton);
 		replyButton.setOnClickListener(this);
 		replyEditText = (EditText) findViewById(R.id.replyEditText);
-		
 		panel = (LinearLayout) findViewById(R.id.panel);
 		panel.setVisibility(LinearLayout.GONE);		
 		
 		for(Page p : pageHandlers) {
 			p.setMainActivity(this);
 		}
-		
 
-		
-		//openOptionsMenu();
-		
 		Uri data = getIntent().getData();
 		
 		if (data == null)
@@ -132,7 +141,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.v("menu", menu.toString());
+		//Log.v("menu", menu.toString());
 		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.layout.menu, menu);
 		this.menu = menu;
@@ -160,15 +169,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		return true;
 	}
 	
-	
-	
 	/**
 	 * @return the menu
 	 */
 	public Menu getMenu() {
 		return menu;
 	}
-
 
 	/**
 	 * @param menu the menu to set
@@ -177,14 +183,18 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		this.menu = menu;
 	}
 
-
+	/**
+	 *
+	 * @param doc
+	 * @return
+	 */
 	public boolean hasLoggedIn(Document doc) {
 		Element e = null;
 		
 		if (doc != null)
 			e = doc.select("#umenu a").first();
 		
-		hasLoggedIn = ! (doc == null || e == null || e.text().equals("µù¥U"));
+		hasLoggedIn = ! (doc == null || e == null || e.text().equals("è¨»å†Š"));
 		
 		return hasLoggedIn;
 	}
@@ -238,7 +248,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	/**
 	 * For Android 4.0 only
 	 */
-	@TargetApi(11)
 	public void styleActionBar() {
 		ActionBar bar = this.getActionBar();
 
@@ -265,7 +274,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 	@Override
 	public void replyDone() {
-		// TODO Auto-generated method stub
 		replyEditText.setText("");
 		replyButton.setEnabled(true);
 	}

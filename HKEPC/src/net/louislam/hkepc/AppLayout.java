@@ -27,7 +27,6 @@ public class AppLayout {
 		try {
 			inStream = am.open("www/index.html");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Scanner scanner = new Scanner(inStream);

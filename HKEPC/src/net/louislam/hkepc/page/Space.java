@@ -13,7 +13,7 @@ public class Space extends Page {
 	public String getContent(Document doc) {
 		StringBuilder sb = new StringBuilder();
 		
-		Element myPost = doc.select("#profile_act .searchpost a").first().text("�ڪ��峹");
+		Element myPost = doc.select("#profile_act .searchpost a").first().text("我的文章");
 		
 		sb.append("<ul><li>");
 		sb.append(myPost.toString());
