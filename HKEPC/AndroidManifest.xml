@@ -41,10 +41,10 @@
             android:label="@string/title_activity_post" >
         </activity>
         
-        <activity
+        <!--<activity
             android:name="net.louislam.hkepc.SettingsActivity"
             android:label="@string/title_activity_settings" >
-        </activity>
+        </activity>-->
         
         <uses-library android:name="com.sec.android.app.multiwindow" android:required="false"></uses-library>
         <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />
