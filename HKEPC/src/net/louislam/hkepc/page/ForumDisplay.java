@@ -21,6 +21,7 @@ public class ForumDisplay extends Page {
 		Element author;
 		Element date;
 		Element num;
+        Element lastReplyDate;
 		sb.append("<div class=\"padding\"><ul>");
 		
 		// Nav
@@ -56,14 +57,16 @@ public class ForumDisplay extends Page {
 			if (item != null) {
 				author = g.select(".author a").first();
 				date = g.select(".author em").first();
-				num = g.select(".nums").first();
+				num = g.select(".nums strong").first();
+                lastReplyDate = g.select(".lastpost em span").first();
 				sb.append("<li>");
 				
 				sb.append(item.html(item.html() + 
 						"<br /><span class=\"box\">" + author.html() + "</span> " +
-						"<span class=\"box\">" + date + "</span> " +
-						"<span class=\"box\">" + num + "</span> "));
-				
+//						"<span class=\"box\">" + date + "</span> |" +
+						"<span class=\"box\">| 回覆: " + num + "</span> " +
+                        "<span class=\"box\">| " + (lastReplyDate==null?"-":lastReplyDate) + "</span> "));
+
 				sb.append("</li>");
 			} else {	
 				if (first) {
