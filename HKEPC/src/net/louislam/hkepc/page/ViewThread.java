@@ -1,32 +1,40 @@
 package net.louislam.hkepc.page;
 
+import android.util.Log;
 import net.louislam.hkepc.AppSettings;
 import net.louislam.hkepc.HKEPC;
 import net.louislam.hkepc.Helper;
 
+import net.louislam.hkepc.util.Util;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class ViewThread extends Page {
+    static Pattern threadLinkPattern = Pattern.compile("viewthread\\.php\\?tid=(\\d+)");
 
 	public String getId() {
 		return "viewthread";
 	}
 
 	public String getContent(Document doc) {
+        initDbHelper();
+        setRead(doc);
 
 		Elements replybtns = doc.select(".replybtn");
 		
 		// Show Reply panel
 		if (replybtns.size() > 0) {
-			a.showPanel();
+            mainActivity.showPanel();
 		}
 		
 		// Get Reply Form post url
-		a.setReplyUrl(doc.select("#fastpostform").attr("action"));
-		a.setReplyFormHash(doc.select("input[name=formhash]").attr("value"));
+        mainActivity.setReplyUrl(doc.select("#fastpostform").attr("action"));
+        mainActivity.setReplyFormHash(doc.select("input[name=formhash]").attr("value"));
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -87,7 +95,7 @@ public class ViewThread extends Page {
 				}
 			}
 				
-			if (AppSettings.get(this.a, "SavingMode").equals("true")) {
+			if (AppSettings.get(this.mainActivity, "SavingMode").equals("true")) {
 				String link;
 				
 				for (Element img : imgs) {
@@ -122,5 +130,31 @@ public class ViewThread extends Page {
 		return sb.toString();
 	}
 
+    private int getThreadId(Document doc){
+        String s = doc.select(".authorinfo a").first().attr("href");
+        int ret = -1;
+        Matcher matcher = threadLinkPattern.matcher(s);
+        if(matcher.find()){
+            ret = Util.convertInt(matcher.group(1));
+        }
+        return ret;
+    }
 
+    private int getPageNo(Document doc){
+        Element page = doc.select(".pages strong").first();
+        int pageNo = 1;
+        if(page != null){
+            String s = page.html();
+            pageNo = Util.convertInt(s);
+        }
+        return pageNo;
+    }
+
+    private void setRead(Document doc){
+        int pageNo = getPageNo(doc);
+        int threadId = getThreadId(doc);
+        if(threadId > -1 && pageNo > 0){
+            dbHelper.setReadThread(threadId, pageNo);
+        }
+    }
 }
