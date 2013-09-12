@@ -1,14 +1,10 @@
 package net.louislam.hkepc.page;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import net.louislam.hkepc.Helper;
-import net.louislam.hkepc.LoginActivity;
 import net.louislam.hkepc.PostActivity;
 import net.louislam.hkepc.R;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -53,15 +49,15 @@ public class Post extends Page {
 		
 		if (replyTitles.size() > 0) {
 			Element replyTitle = replyTitles.first();
-			replyTitle.select("a").remove();
+			replyTitle.select("a").removea;
 			data.put("subject", replyTitle.text());
 		}*/
 		
-		Intent intent = new Intent(a, PostActivity.class);
+		Intent intent = new Intent(mainActivity, PostActivity.class);
 		intent.putExtra("data", data);
 		intent.putExtra("textarea", textarea);
-		
-		a.startActivityForResult(intent, R.layout.post);
+
+        mainActivity.startActivityForResult(intent, R.layout.post);
 		
 		return null;
 	}
