@@ -1,0 +1,80 @@
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+         >
+
+
+<LinearLayout 
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+   
+
+    
+  <LinearLayout
+         android:id="@+id/fakeBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp"
+        android:background="#8EC31F"
+        android:visibility="gone">
+
+      <ImageView
+          android:id="@+id/imageView1"
+          android:layout_width="33dp"
+          android:layout_height="33dp"
+          android:src="@drawable/ic_launcher" />
+
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="@string/title_activity_main"
+          android:textAppearance="?android:attr/textAppearanceLarge" 
+          android:textColor="#FFFFFF"/>
+
+    </LinearLayout>    
+    
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+  <LinearLayout
+         android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/replyEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textMultiLine" >
+        </EditText>
+
+        <Button
+            android:id="@+id/replyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回覆" />
+    </LinearLayout>
+
+</LinearLayout>
+
+     <ProgressBar
+         android:id="@+id/loading_icon"
+         style="?android:attr/progressBarStyleLarge"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_centerVertical="true" 
+               android:visibility="gone"	/>
+
+</RelativeLayout>

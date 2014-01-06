@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/refresh"
+        android:showAsAction="always|withText"
+        android:title="重新整理"/>
+
+    <item
+        android:id="@+id/username"
+        android:showAsAction="ifRoom|withText"
+        android:title="username"/>
+
+    <item
+        android:id="@+id/msg"
+        android:showAsAction="ifRoom|withText"
+        android:title="短訊 [開發中]"/>
+    
+
+    
+    <item
+        android:id="@+id/login"
+        android:showAsAction="ifRoom|withText"
+        android:title="登入"/>
+    
+    <item
+        android:id="@+id/viewInBrowser"
+        android:showAsAction="ifRoom|withText"
+        android:title="桌面版網站"/>
+    
+      <item
+        android:id="@+id/savingMode"
+        android:showAsAction="never|withText"
+        android:title="節流模式"
+        android:checkable="true" />  
+
+    <item
+        android:id="@+id/logout"
+        android:showAsAction="ifRoom|withText"
+        android:title="登出"/>
+
+    <item
+        android:id="@+id/About"
+        android:showAsAction="ifRoom|withText"
+        android:title="關於"/>
+
+</menu>
