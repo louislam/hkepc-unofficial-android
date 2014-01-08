@@ -28,6 +28,7 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Stack;
+import java.util.Timer;
 
 /**
  * HKEPC Activity Base Class
@@ -76,8 +77,9 @@ public abstract class HKEPC extends Activity {
 	private String replyFormHash;
 	
 	private ProgressBar loadingIcon;
-	
-	
+
+
+	Timer timer = new Timer(true);
 	
 	/**
 	 * @return the webView
