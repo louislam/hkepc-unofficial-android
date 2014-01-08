@@ -155,7 +155,11 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 	public class timerTask extends TimerTask {
 		public void run() {
-			adLayout.setVisibility(RelativeLayout.VISIBLE);
+			runOnUiThread(new Runnable() {
+				public void run() {
+					adLayout.setVisibility(RelativeLayout.VISIBLE);
+				}
+			});
 		}
 	};
 
