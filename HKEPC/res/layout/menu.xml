@@ -14,7 +14,7 @@
     <item
         android:id="@+id/msg"
         android:showAsAction="ifRoom|withText"
-        android:title="短訊 [開發中]"/>
+        android:title="短訊"/>
     
 
     

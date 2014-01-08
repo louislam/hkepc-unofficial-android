@@ -1,16 +1,15 @@
 package net.louislam.hkepc.page;
 
-import android.content.Context;
 import net.louislam.hkepc.MainActivity;
-
 import net.louislam.hkepc.db.DatabaseHelper;
 import org.jsoup.nodes.Document;
 
 public abstract class Page {
-    DatabaseHelper dbHelper;
+   	DatabaseHelper dbHelper;
 	protected MainActivity mainActivity;
-    final String TAG = getId();
-	
+    	final String TAG = getId();
+
+	/** doc.select("body").attr("id"); */
 	public abstract String getId();
 	public abstract String getContent(Document doc);
 	

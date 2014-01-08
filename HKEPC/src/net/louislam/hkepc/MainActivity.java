@@ -55,6 +55,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new Logout(),
 		new Refresh(),
 		new MySpace(),
+		new PM(),
 		new About(),
 		new Home(),
 		new DesktopWebsite(),

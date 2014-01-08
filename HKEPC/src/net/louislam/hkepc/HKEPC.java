@@ -41,6 +41,7 @@ public abstract class HKEPC extends Activity {
 		new Index(), 
 		new ForumDisplay(), 
 		new ViewThread(),
+		new PM(),
 		new Space(),
 		new Search(),
 		new Post()
