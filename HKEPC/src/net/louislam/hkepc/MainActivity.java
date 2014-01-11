@@ -1,6 +1,9 @@
 package net.louislam.hkepc;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import com.android.vending.billing.IInAppBillingService;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -54,6 +58,14 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	private AdView adView;
 	private RelativeLayout adLayout;
 
+	private IInAppBillingService mService;
+	private ServiceConnection mServiceConn;
+
+	private GooglePlay googlePlay;
+
+	private AlertDialog.Builder closeAdsDialog;
+
+
 	/**
 	 * Actions
 	 */
@@ -66,7 +78,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new About(),
 		new Home(),
 		new DesktopWebsite(),
-		new SavingMode()
+		new SavingMode(),
+		new RemoveAds()
 	};
 
 	/**
@@ -90,7 +103,8 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			LinearLayout fakeBar = (LinearLayout) findViewById(R.id.fakeBar);
 			fakeBar.setVisibility(LinearLayout.VISIBLE);
 		}
-		
+
+		adLayout = (RelativeLayout) findViewById(R.id.adLayout);
 		replyButton = (Button) findViewById(R.id.replyButton);
 		replyButton.setOnClickListener(this);
 		replyEditText = (EditText) findViewById(R.id.replyEditText);
@@ -109,6 +123,49 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			this.loadNewUrl(data.toString());
 		}
 
+		googlePlay = new GooglePlay(this);
+
+		googlePlay.checkAds();
+
+	}
+
+	public void ads(boolean display) {
+
+		if (!display) {
+			adLayout.setVisibility(RelativeLayout.GONE);
+			menu.findItem(R.id.remove_ads).setVisible(false);
+			timer.cancel();
+			return;
+		}
+
+		menu.findItem(R.id.remove_ads).setVisible(true);
+
+		if (this.closeAdsDialog == null) {
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("作者的話");
+			alert.setMessage("親愛的 EPC 巴打您好\n\n" +
+				"感謝您地一直支持 EPC APP。" +
+				"作者可是花了很多時間製作這個程式給一眾巴打使用。" +
+				"如覺得好用，不妨用一支汽水嘅價錢 (HKD 9.9) 支持下小弟！支持小弟繼續開展下去！" +
+				"\n\nLouisLam 上");
+
+			alert.setNegativeButton("永久移除廣告", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					googlePlay.buyNoAds();
+				}
+			});
+
+			alert.setPositiveButton("暫時隱藏 (諗下先)", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					adLayout.setVisibility(RelativeLayout.GONE);
+				}
+			});
+
+			closeAdsDialog = alert;
+		}
+
 
 		// 建立 adView
 		adView = new AdView(this, AdSize.BANNER, "a152cd6f14893c0");
@@ -116,8 +173,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 		// 查詢 LinearLayout (假設您已經提供)
 		// 屬性是 android:id="@+id/mainLayout"
-		final RelativeLayout layout = (RelativeLayout) findViewById(R.id.adLayout);
-		adLayout = layout;
+		final RelativeLayout layout = adLayout;
 
 		// 在其中加入 adView
 		layout.addView(adView);
@@ -144,14 +200,22 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		closeAdButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				layout.setVisibility(RelativeLayout.GONE);
+				closeAdsDialog.show();
 			}
 		});
 
-
+		adLayout.setVisibility(RelativeLayout.VISIBLE);
 		timer.schedule(new timerTask(), 120000);
 
 	}
+
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+	}
+
 
 	public class timerTask extends TimerTask {
 		public void run() {
@@ -212,7 +276,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
+
+	public void buy() {
+		googlePlay.buyNoAds();
+	}
+
 
 	/**
 	 * Menu bar actions

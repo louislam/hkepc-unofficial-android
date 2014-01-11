@@ -201,7 +201,10 @@ public abstract class HKEPC extends Activity {
 		
 		loadData(url);
 	}
-	
+
+
+
+
 	/**
 	 * Go back to the previous page
 	 */

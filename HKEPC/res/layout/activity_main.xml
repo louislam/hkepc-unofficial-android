@@ -71,6 +71,7 @@
 			android:orientation="vertical"
 			android:layout_width="fill_parent"
 			android:layout_height="50dp"
+			android:visibility="gone"
 			android:background="#000000">
 			<Button
 				style="?android:attr/buttonStyleSmall"

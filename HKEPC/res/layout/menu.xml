@@ -44,4 +44,10 @@
         android:showAsAction="ifRoom|withText"
         android:title="關於"/>
 
+	<item
+		android:id="@+id/remove_ads"
+		android:showAsAction="ifRoom|withText"
+		android:title="永久移除廣告"
+		android:visible="false"/>
+
 </menu>
