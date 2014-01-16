@@ -406,6 +406,11 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		replyEditText.setText("");
 		replyButton.setEnabled(true);
 	}
-	
+
+	@Override
+	public void replyFail() {
+		replyButton.setEnabled(true);
+	}
+
 	
 }

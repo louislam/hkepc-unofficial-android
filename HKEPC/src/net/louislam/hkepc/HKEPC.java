@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.gson.Gson;
+import net.louislam.android.L;
 import net.louislam.hkepc.page.*;
 import net.louislam.hkepc.urlhandler.Logging;
 import net.louislam.hkepc.urlhandler.UrlHandler;
@@ -426,7 +427,9 @@ public abstract class HKEPC extends Activity {
 						.method(Method.POST)
 						.execute();		
 				//Helper.log(res.parse().toString());
-			} catch (IOException e) { }
+			} catch (Exception e) {
+				return null;
+			}
 						
 			return res;
 		}
@@ -435,12 +438,24 @@ public abstract class HKEPC extends Activity {
 
 		@Override
 		protected void onPostExecute(Connection.Response b) {
-			HKEPC.this.refresh();
-			replyDone();
+
+			if (b == null || b.statusCode() != 200) {
+				String code = "null";
+				if ( b != null) {
+					code = b.statusCode() + "";
+				}
+				L.alert(HKEPC.this, "無法送出，請重試。Code: " + code);
+			} else {
+
+				HKEPC.this.refresh();
+				replyDone();
+			}
 		}
 	}	
 	
 	public abstract void replyDone();
+	public abstract void replyFail();
+
 
 	/**
 	 * Show Load Dialog

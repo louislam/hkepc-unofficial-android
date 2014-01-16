@@ -1,22 +1,22 @@
 package net.louislam.hkepc;
 
-import java.util.Map;
-
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
-import org.jsoup.Jsoup;
-import org.jsoup.Connection.Method;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import net.louislam.android.L;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+
+import java.util.Map;
 
 public class PostActivity extends Activity implements OnClickListener {
 
@@ -81,6 +81,12 @@ public class PostActivity extends Activity implements OnClickListener {
 		this.finish();
 	}
 
+	public void fail(Response res) {
+		postButton.setEnabled(true);
+		postButton.setText("傳送");
+	}
+
+
 	/**
 	 * 
 	 * @author Louis Lam
@@ -98,6 +104,7 @@ public class PostActivity extends Activity implements OnClickListener {
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error", e.toString());
+				return null;
 			}
 			
 			return res;
@@ -111,7 +118,17 @@ public class PostActivity extends Activity implements OnClickListener {
 		// This is called when doInBackground() is finished
 		@Override
 		protected void onPostExecute(Connection.Response b) {
-			done(b);
+			if (b == null || b.statusCode() != 200) {
+				String code = "null";
+				if ( b != null) {
+					code = b.statusCode() + "";
+				}
+				L.alert(PostActivity.this, "無法送出，請重試。Code: " + code);
+				fail(b);
+			} else {
+				//L.alert(PostActivity.this, "成功送出! 代碼: [" +b.statusCode() + "]");
+				done(b);
+			}
 		}
 	}		
 	
