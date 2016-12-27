@@ -19,6 +19,9 @@ import com.android.vending.billing.IInAppBillingService;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.google.ads.mediation.admob.AdMobAdapterExtras;
+import com.google.analytics.tracking.android.EasyTracker;
+import net.louislam.android.L;
 import net.louislam.hkepc.action.*;
 import net.louislam.hkepc.page.Page;
 import org.jsoup.nodes.Document;
@@ -82,12 +85,26 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		new RemoveAds()
 	};
 
+	public static final String UPDATE_TAG = "update1";
+
+	public void firstRun() {
+		if (L.getString(this, UPDATE_TAG) == null) {
+			L.alert(this, "2014/1/25\n更新功能: \n" +
+				"EPC 首頁文章閱讀功能\n(新聞中心, 新品快遞, 專題報導)");
+		}
+
+		L.storeString(this, UPDATE_TAG, "1");
+	}
+
+
 	/**
 	 *
 	 * @param savedInstanceState
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		firstRun();
 
 		if (Build.VERSION.SDK_INT >= 11) {
 			
@@ -124,8 +141,9 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		}
 
 		googlePlay = new GooglePlay(this);
-
 		googlePlay.checkAds();
+
+		EasyTracker.getInstance(this).activityStart(this);
 
 	}
 
@@ -167,6 +185,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		}
 
 
+
 		// 建立 adView
 		adView = new AdView(this, AdSize.BANNER, "a152cd6f14893c0");
 		//adView
@@ -183,18 +202,27 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		keywords.add("Computer");
 		keywords.add("硬件");
 		keywords.add("hardware");
+		keywords.add("mobile");
+		keywords.add("android");
+		keywords.add("apple");
+		keywords.add("samsung");
 		keywords.add("手機");
 		keywords.add("mobile");
 		keywords.add("相機");
 		keywords.add("顯卡");
-		keywords.add("3D printer");
 		keywords.add("game");
 
 		AdRequest adRequest = new AdRequest();
 		adRequest.setKeywords(keywords);
 
+
+		// AdMob network
+		AdMobAdapterExtras adMob = new AdMobAdapterExtras();
+		adRequest.setNetworkExtras(adMob);
+
 		// 啟用泛用請求，並隨廣告一起載入
 		adView.loadAd(adRequest);
+
 
 		closeAdButton = (Button) findViewById(R.id.button_close_ad);
 		closeAdButton.setOnClickListener(new OnClickListener() {
@@ -205,7 +233,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		});
 
 		adLayout.setVisibility(RelativeLayout.VISIBLE);
-		timer.schedule(new timerTask(), 120000);
+		timer.schedule(new timerTask(), 900000);
 
 	}
 
@@ -222,6 +250,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			runOnUiThread(new Runnable() {
 				public void run() {
 					adLayout.setVisibility(RelativeLayout.VISIBLE);
+					timer.schedule(new timerTask(), 900000);
 				}
 			});
 		}
@@ -337,6 +366,11 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		
 		if (doc != null)
 			e = doc.select("#umenu a").first();
+
+		// 如果唔係 Forum, 唔洗 check
+		if ( ! url.contains("forum")) {
+			return;
+		}
 		
 		// Have not login
 		if ( ! this.hasLoggedIn(doc)) {
@@ -410,6 +444,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	@Override
 	public void replyFail() {
 		replyButton.setEnabled(true);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 
 	

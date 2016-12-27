@@ -1,7 +1,6 @@
 package net.louislam.hkepc.page;
 
 import net.louislam.hkepc.Helper;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -23,6 +22,12 @@ public class Index extends Page {
 		
 		Elements groups = doc.select(".group");
 
+		sb.append(Helper.listViewDivider("首頁"));
+		sb.append("<li><a href=\"http://www.hkepc.com/moreNews\"><img class='icon' src='file:///android_asset/images/news.png' alt='' /><span>新聞中心</span></a></li>");
+		sb.append("<li><a href=\"http://www.hkepc.com/review\"><img class='icon' src='file:///android_asset/images/truck.png' alt='' /><span>新品快遞</span></a></li>");
+		sb.append("<li><a href=\"http://www.hkepc.com/coverStory\"><img class='icon' src='file:///android_asset/images/news.png' alt='' /><span>專題報導</span></a></a></li>");
+
+
 		for (Element g : groups) {
 			sb.append(Helper.listViewDivider(g.select("a").text()));
 			
@@ -37,8 +42,7 @@ public class Index extends Page {
 				img.attr("src", img.attr("src"));
 				img.addClass("icon");
 				
-				sb.append("<li>" + "<a href=\"" + href + "\">" + img +  name + "</a></li>");
-				//Log.d("img", "<li>" + "<a href=\"" + href + "\">" + img +  name + "</a></li>");
+				sb.append("<li>" + "<a href=\"" + href + "\">" + img + name + "</a></li>");
 				current = current.nextElementSibling();
 			}
 		}

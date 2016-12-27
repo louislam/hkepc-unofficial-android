@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import net.louislam.android.L;
 import net.louislam.hkepc.page.*;
-import net.louislam.hkepc.urlhandler.Logging;
 import net.louislam.hkepc.urlhandler.UrlHandler;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
@@ -38,7 +38,7 @@ import java.util.Timer;
  */
 public abstract class HKEPC extends Activity {
 	
-	/** Page Handler */
+	/** Page Handler (討論區) */
 	protected static final Page[] pageHandlers = { 
 		new Index(), 
 		new ForumDisplay(), 
@@ -48,10 +48,18 @@ public abstract class HKEPC extends Activity {
 		new Search(),
 		new Post()
 	};
-	
+
+	/** Page Handler (首頁文章) */
+	protected static final Page[] mainPageHandlers = {
+		new EPCHome(),
+		new EPCHomeCoverStory(),
+		new EPCHomeNewProduct(),
+
+	};
+
 	/** Url Handler */
 	protected static final UrlHandler[] urlHandlers = {
-		new Logging()
+		//new Logging()
 	};
 	
 	/** File Format */
@@ -190,7 +198,7 @@ public abstract class HKEPC extends Activity {
 		}
 		
 		// Not hkepc forum or image
-		if ( isImage || ! url.contains("hkepc.com/forum")) {
+		if ( isImage || ! url.contains("hkepc.com")) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			startActivity(browserIntent);
 			return;
@@ -198,24 +206,18 @@ public abstract class HKEPC extends Activity {
 	
 		if (currentContent != null) {
 			contentStack.add(currentContent);
-		}	
-		
+		}
+
 		loadData(url);
 	}
-
-
 
 
 	/**
 	 * Go back to the previous page
 	 */
-	public void goBack() {		
-		//loadingDialog.show();
-		
+	public void goBack() {
 		if (canGoBack()) {
 			currentContent = contentStack.pop();
-			//this.loadData(currentContent.getUrl());
-
 			this.setContent(currentContent.getContent());
 			this.loadPage();
 		}
@@ -282,11 +284,13 @@ public abstract class HKEPC extends Activity {
 	 * @param doc
 	 */
 	public void pageLoadDone(Document doc, String url) {
-		
+
+		L.log("Url: " + url);
+
 		// If the document is nothing.
 		if (doc == null) {
 			loadingDialog.hide();
-			Toast.makeText(getApplicationContext(), "無法連接到 HKEPC。", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "無法連接到 HKEPC。網路不穩定，或者 EPC 又死機。 :(", Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -295,7 +299,7 @@ public abstract class HKEPC extends Activity {
 		boolean valid = false;
 		String content = null;
 		
-		// Handle page
+		// Handle page (for forum)
 		for (Page p : pageHandlers) {
 			if (p.getId().equals(id)) {
 				content = p.getContent(doc);
@@ -303,12 +307,25 @@ public abstract class HKEPC extends Activity {
 				break;
 			}
 		}
-		
-		if (valid) {
-		
-		// Get Simple Content
-		} else {
-			content = (new Last()).getContent(doc);
+
+		// Handle page (for epc home)
+		for (Page p : mainPageHandlers) {
+			if (url.contains(p.getId())) {
+				content = p.getContent(doc);
+				valid = true;
+				break;
+			}
+		}
+
+		if ( ! valid) {
+
+			// 最後睇下係咪首頁嘅 Article, 唔係就直接display content
+			if (doc.select("#article").size() > 0) {
+				content = (new EPCHomeArticle()).getContent(doc);
+				valid = true;
+			} else {
+				content = (new Last()).getContent(doc);
+			}
 		}
 		
 		// if no content, do not load it into webview
@@ -320,7 +337,6 @@ public abstract class HKEPC extends Activity {
 		currentContent.setContent(content);
 		this.setContent(content);
 		this.loadPage();
-		//loadingDialog.hide();
 	}
 	
 	/**
@@ -344,7 +360,14 @@ public abstract class HKEPC extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Login
 		if (requestCode == 1234 && resultCode == RESULT_OK) {
-			this.refresh();
+
+			// 如果睇緊 forum, 就REFRESH,  否則 login 完去返討論區首頁.
+			if (this.getCurrentUrl().contains("forum")) {
+				this.refresh();
+			} else {
+				this.loadNewUrl(HKEPC.URL);
+			}
+
 		}
 		
 		if (requestCode == R.layout.post && resultCode == RESULT_OK) {
@@ -425,10 +448,11 @@ public abstract class HKEPC extends Activity {
 						.cookies(HKEPC.getCookies(HKEPC.this))
 						.data("message", msg, "formhash", formHash)
 						.method(Method.POST)
+						.ignoreHttpErrors(true)
 						.execute();		
 				//Helper.log(res.parse().toString());
 			} catch (Exception e) {
-				return null;
+				Log.d("Error", e.toString());
 			}
 						
 			return res;
@@ -439,12 +463,9 @@ public abstract class HKEPC extends Activity {
 		@Override
 		protected void onPostExecute(Connection.Response b) {
 
-			if (b == null || b.statusCode() != 200) {
-				String code = "null";
-				if ( b != null) {
-					code = b.statusCode() + "";
-				}
-				L.alert(HKEPC.this, "無法送出，請重試。Code: " + code);
+			if (b != null && b.statusCode() != 200) {
+				L.alert(HKEPC.this, "無法送出，請重試。Code: " + b.statusCode() );
+				replyFail();
 			} else {
 
 				HKEPC.this.refresh();

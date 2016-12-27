@@ -1,15 +1,13 @@
 package net.louislam.hkepc;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
-
+import android.content.Context;
+import android.content.res.AssetManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.util.Log;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
 
 public class AppLayout {
 	
@@ -44,6 +42,9 @@ public class AppLayout {
 	}
 	
 	public void content(String c) {
+		if (c == null)
+			c = "";
+
 		this.content = c;
 	}
 	

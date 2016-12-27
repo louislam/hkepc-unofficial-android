@@ -23,83 +23,21 @@ public class GooglePlay {
 
 	public GooglePlay(MainActivity context) {
 		this.context = context;
-
 	}
 
 
 	/**
-	 * In app purcharse
+	 * In app purchase
+	 * @deprecated
 	 */
 	public void buyNoAds() {
-		loading = L.progressDialog(context, "連接到 Google Play 中");
 
-		InAppBillingV3Impl.createNewInAppBillingV3Impl(
-			context, base64EncodedPublicKey, new OnCompleteListener<InAppBillingV3Impl>() {
-
-			@Override
-			public void complete(final InAppBillingV3Impl inAppBillingV3) {
-				inAppBillingV3.buyProduct(SKU, new OnCompleteListener<Purchase>() {
-
-					@Override
-					public void complete(Purchase purchase) {
-						L.alert(GooglePlay.this.context, "謝謝! 購買成功");
-						loading.hide();
-						context.ads(false);
-
-						/*inAppBillingV3.consumePurchase(purchase, new OnCompleteListener<Boolean>() {
-							@Override
-							public void complete(Boolean aBoolean) {
-
-							}
-
-							@Override
-							public void error(int i) {
-
-							}
-						});*/
-					}
-
-					@Override
-					public void error(int i) {
-						L.alert(GooglePlay.this.context, "付款不成功，請再試。");
-						loading.hide();
-					}
-				});
-			}
-
-			@Override
-			public void error(int i) {
-				//L.alert(GooglePlay.this.context, ERROR_MSG);
-			}
-		});
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void checkAds() {
-		InAppBillingV3Impl.createNewInAppBillingV3Impl(
-			context, base64EncodedPublicKey, new OnCompleteListener<InAppBillingV3Impl>() {
-
-			@Override
-			public void complete(final InAppBillingV3Impl inAppBillingV3) {
-				inAppBillingV3.getPurchases(new OnCompleteListener<Inventory>() {
-					@Override
-					public void complete(Inventory inventory) {
-						context.ads( ! inventory.hasPurchase(SKU));
-					}
-
-					@Override
-					public void error(int i) {
-						//L.alert(GooglePlay.this.context, ERROR_MSG);
-						context.ads(true);
-					}
-				});
-			}
-
-			@Override
-			public void error(int i) {
-				//L.alert(GooglePlay.this.context, ERROR_MSG);
-				context.ads(true);
-			}
-		});
 
 	}
 

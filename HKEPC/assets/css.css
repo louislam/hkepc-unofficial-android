@@ -1,0 +1,151 @@
+.epc-home {
+        color: #333;
+        font-size: 1.0em;
+
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+}
+
+.epc-home a {
+	color: #777;
+}
+
+.epc-home .item {
+	border: 1px solid #EBEBEB;
+	padding: 20px;
+	border-radius: 10px;
+	margin: 28px 8px;
+	background-color: #FAFAFA;
+}
+
+.epc-home .item img {
+	width: 100%;
+}
+
+.epc-home .item .tags {
+	font-size: 0.8em;
+	margin: 14px 0;
+	color: #AAA;
+}
+
+.epc-home .item .header .heading {
+	font-weight: bold;
+	color: #8EC31F;
+}
+
+.epc-home .item .header .right {
+	font-size: 1em;
+	display: block;
+	margin: 10px 0;
+	text-decoration: none;
+}
+
+.epc-home .item .footer {
+	margin-top: 10px;
+}
+
+.epc-home .item .introduction {
+	font-size: 1em;
+}
+
+.epc-home .item .footer .left a {
+	color: #FFF;
+        text-decoration: none;
+        background-color: #8EC31F;
+        padding: 10px 20px;
+        display: block;
+}
+
+.epc-home .item .footer .right {
+	margin-top: 10px;
+	display: inline-block;
+}
+
+.epc-home .item .footer .right a {
+	text-decoration: none;
+        display: block;
+        padding: 10px;
+        background-color: #8EC31F;
+        color: #FFF;
+        margin-right: 10px;
+        float: left;
+        font-size: 0.7em;
+}
+
+.epc-home .item .footer .right .comment {
+	display: none;
+}
+
+#articleHead {
+	font-size: 0.8em;
+	color: #666;
+}
+
+#articleFooter {
+	font-size: 1.5em;
+	margin: 15px;
+}
+
+#articleFooter > div {
+	margin: 10px 0;
+}
+
+
+
+
+.epc-home .article {
+	border: 1px solid #EBEBEB;
+	padding: 20px;
+	border-radius: 10px;
+	margin: 28px 8px;
+	background-color: #FAFAFA;
+}
+
+.epc-home .article .heading, .epc-home .article .newsHead {
+	font-weight: bold;
+	margin: 10px 0;
+	font-size: 1.2em;
+}
+
+.epc-home .article .content {
+	font-size: 0.7em;
+}
+
+.epc-home .article img {
+	max-width: 100%;
+}
+
+.epc-home .article .tags {
+	margin: 20px 0;
+}
+
+.epc-home .article .author, .epc-home .article .newsAuthor {
+	margin: 10px 0;
+	font-size: 0.8em;
+	color: grey;
+}
+
+#relatedArticles {
+	background-color: #EEE;
+	padding: 17px;
+	margin-top: 16px;
+
+}
+
+#relatedArticles td:first-child {
+	display: none;
+}
+
+
+.epc-home .article #comments, .advertisement {
+	display: none;
+}
+
+#share_btn {
+	display: none;
+}
+
+.pages .index, .pages span {
+	display: none;
+	margin-bottom: 15px;
+}

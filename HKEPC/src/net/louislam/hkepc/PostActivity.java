@@ -100,6 +100,7 @@ public class PostActivity extends Activity implements OnClickListener {
 				res = Jsoup.connect(HKEPC.URL + data[0].get("postLink"))
 						    .data(data[0]).cookies(HKEPC.getCookies(PostActivity.this))
 						    .method(Method.POST)
+							.ignoreHttpErrors(true)
 						    .execute();
 			} catch (Exception e) {
 				e.printStackTrace();
