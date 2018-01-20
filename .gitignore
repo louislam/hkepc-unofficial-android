@@ -2,7 +2,7 @@
 ## Eclipse
 #################
 
-HKEPC/.idea/workspace.xml
+.idea/
 
 *.pydevproject
 .project

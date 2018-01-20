@@ -1,0 +1,104 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Risky Project Location:
+-----------------------
+The tools *should* handle project locations in any directory. However,
+due to bugs, placing projects in directories containing spaces in the
+path, or characters like ", ' and &, have had issues. We're working to
+eliminate these bugs, but to save yourself headaches you may want to
+move your project to a location where this is not a problem.
+D:\Dropbox\My Projects\HKEPC
+             -              
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\.name
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\dictionaries\
+* .idea\dictionaries\Louis_Lam.xml
+* .idea\encodings.xml
+* .idea\libraries\
+* .idea\libraries\AdBuddiz_2_0_1.xml
+* .idea\libraries\GoogleAdMobAdsSdk_6_4_1.xml
+* .idea\libraries\gson_2_2_2.xml
+* .idea\libraries\jsoup_1_7_1.xml
+* .idea\libraries\libGoogleAnalyticsServices.xml
+* .idea\libraries\louislam_lazy_library_1_0.xml
+* .idea\libraries\mc_inappbilling_1_0_1.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\scopes\
+* .idea\scopes\scope_settings.xml
+* .idea\uiDesigner.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* HKEPC.iml
+* proguard-project.txt
+* proguard_logs\
+* proguard_logs\dump.txt
+* proguard_logs\mapping.txt
+* proguard_logs\seeds.txt
+* proguard_logs\usage.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+gson-2.2.2.jar => com.google.code.gson:gson:2.2.2
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+gson-2.2.2.jar => version 2.2.2 in com.google.code.gson:gson:2.2.2
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\GoogleAdMobAdsSdk-6.4.1.jar => app\libs\GoogleAdMobAdsSdk-6.4.1.jar
+* libs\jsoup-1.7.1.jar => app\libs\jsoup-1.7.1.jar
+* libs\libGoogleAnalyticsServices.jar => app\libs\libGoogleAnalyticsServices.jar
+* libs\louislam-lazy-library-1.0.jar => app\libs\louislam-lazy-library-1.0.jar
+* libs\mc.inappbilling-1.0.1.jar => app\libs\mc.inappbilling-1.0.1.jar
+* lint.xml => app\lint.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
