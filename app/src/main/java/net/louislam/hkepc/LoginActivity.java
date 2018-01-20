@@ -40,6 +40,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View view) {
+		button.setEnabled(false);
+		button.setText("登入中... 請稍後");
 		(new LoginTask()).execute(username.getText().toString(), password.getText().toString());
 	}
 	
@@ -90,6 +92,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				res = Jsoup.connect(HKEPC.URL + page)
 						    .data("username", strs[0], "password", strs[1])
 						    .method(Method.POST)
+							.timeout(0)
 						    .execute();
 			} catch (IOException e) {
 				e.printStackTrace();
