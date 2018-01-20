@@ -1,0 +1,554 @@
+com.google.gson.DefaultDateTypeAdapter
+com.google.gson.FieldAttributes:
+    53:53:public java.lang.Class getDeclaringClass()
+    60:60:public java.lang.String getName()
+    80:80:public java.lang.reflect.Type getDeclaredType()
+    100:100:public java.lang.Class getDeclaredClass()
+    111:111:public java.lang.annotation.Annotation getAnnotation(java.lang.Class)
+    121:121:public java.util.Collection getAnnotations()
+    135:135:public boolean hasModifier(int)
+    146:146:java.lang.Object get(java.lang.Object)
+    155:155:boolean isSynthetic()
+com.google.gson.Gson:
+    static final boolean DEFAULT_JSON_NON_EXECUTABLE
+    private static final java.lang.String JSON_NON_EXECUTABLE_PREFIX
+    455:458:public com.google.gson.JsonElement toJsonTree(java.lang.Object)
+    478:480:public com.google.gson.JsonElement toJsonTree(java.lang.Object,java.lang.reflect.Type)
+    539:544:public void toJson(java.lang.Object,java.lang.Appendable)
+    733:736:public java.lang.Object fromJson(java.io.Reader,java.lang.Class)
+    832:833:public java.lang.Object fromJson(com.google.gson.JsonElement,java.lang.Class)
+    856:859:public java.lang.Object fromJson(com.google.gson.JsonElement,java.lang.reflect.Type)
+com.google.gson.Gson$2:
+    131:131:public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type)
+com.google.gson.Gson$3:
+    137:137:public com.google.gson.JsonElement serialize(java.lang.Object)
+    140:140:public com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type)
+com.google.gson.GsonBuilder
+com.google.gson.JsonArray:
+    61:62:public void addAll(com.google.gson.JsonArray)
+    70:70:public int size()
+    92:92:public com.google.gson.JsonElement get(int)
+    154:157:public java.math.BigDecimal getAsBigDecimal()
+    171:174:public java.math.BigInteger getAsBigInteger()
+    187:190:public float getAsFloat()
+    227:230:public byte getAsByte()
+    235:238:public char getAsCharacter()
+    251:254:public short getAsShort()
+com.google.gson.JsonDeserializationContext:
+    public abstract java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type)
+com.google.gson.JsonDeserializer
+com.google.gson.JsonElement:
+    130:133:public com.google.gson.JsonNull getAsJsonNull()
+    211:211:public float getAsFloat()
+    251:251:public byte getAsByte()
+    265:265:public char getAsCharacter()
+    279:279:public java.math.BigDecimal getAsBigDecimal()
+    293:293:public java.math.BigInteger getAsBigInteger()
+    306:306:public short getAsShort()
+com.google.gson.JsonIOException:
+    private static final long serialVersionUID
+    33:34:public JsonIOException(java.lang.String,java.lang.Throwable)
+com.google.gson.JsonObject:
+    68:68:public com.google.gson.JsonElement remove(java.lang.String)
+    79:80:public void addProperty(java.lang.String,java.lang.String)
+    90:91:public void addProperty(java.lang.String,java.lang.Number)
+    101:102:public void addProperty(java.lang.String,java.lang.Boolean)
+    112:113:public void addProperty(java.lang.String,java.lang.Character)
+    122:122:private com.google.gson.JsonElement createJsonElement(java.lang.Object)
+    142:142:public boolean has(java.lang.String)
+    152:156:public com.google.gson.JsonElement get(java.lang.String)
+    166:166:public com.google.gson.JsonPrimitive getAsJsonPrimitive(java.lang.String)
+    176:176:public com.google.gson.JsonArray getAsJsonArray(java.lang.String)
+    186:186:public com.google.gson.JsonObject getAsJsonObject(java.lang.String)
+com.google.gson.JsonParseException:
+    static final long serialVersionUID
+com.google.gson.JsonParser
+com.google.gson.JsonPrimitive:
+    74:76:public JsonPrimitive(java.lang.Character)
+    84:86:JsonPrimitive(java.lang.Object)
+    199:199:public java.math.BigDecimal getAsBigDecimal()
+    210:210:public java.math.BigInteger getAsBigInteger()
+    222:222:public float getAsFloat()
+    244:244:public short getAsShort()
+    260:260:public byte getAsByte()
+    265:265:public char getAsCharacter()
+com.google.gson.JsonSerializationContext:
+    public abstract com.google.gson.JsonElement serialize(java.lang.Object)
+    public abstract com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type)
+com.google.gson.JsonSerializer
+com.google.gson.JsonStreamParser
+com.google.gson.JsonSyntaxException:
+    private static final long serialVersionUID
+com.google.gson.LongSerializationPolicy:
+    public abstract com.google.gson.JsonElement serialize(java.lang.Long)
+com.google.gson.LongSerializationPolicy$1:
+    36:36:public com.google.gson.JsonElement serialize(java.lang.Long)
+com.google.gson.LongSerializationPolicy$2:
+    47:47:public com.google.gson.JsonElement serialize(java.lang.Long)
+com.google.gson.TreeTypeAdapter
+com.google.gson.TreeTypeAdapter$1
+com.google.gson.TreeTypeAdapter$SingleTypeFactory
+com.google.gson.TypeAdapter:
+    141:143:public final void toJson(java.io.Writer,java.lang.Object)
+    186:186:public final com.google.gson.TypeAdapter nullSafe()
+    215:217:public final java.lang.String toJson(java.lang.Object)
+    255:256:public final java.lang.Object fromJson(java.io.Reader)
+    269:269:public final java.lang.Object fromJson(java.lang.String)
+    280:283:public final java.lang.Object fromJsonTree(com.google.gson.JsonElement)
+com.google.gson.TypeAdapter$1
+com.google.gson.internal.$Gson$Preconditions:
+    32:32:public $Gson$Preconditions()
+com.google.gson.internal.$Gson$Types:
+    45:45:private $Gson$Types()
+com.google.gson.internal.$Gson$Types$GenericArrayTypeImpl:
+    private static final long serialVersionUID
+com.google.gson.internal.$Gson$Types$ParameterizedTypeImpl:
+    private static final long serialVersionUID
+com.google.gson.internal.$Gson$Types$WildcardTypeImpl:
+    private static final long serialVersionUID
+com.google.gson.internal.Excluder:
+    private static final double IGNORE_VERSIONS
+    70:72:public com.google.gson.internal.Excluder withVersion(double)
+    76:81:public varargs com.google.gson.internal.Excluder withModifiers(int[])
+    85:87:public com.google.gson.internal.Excluder disableInnerClassSerialization()
+    91:93:public com.google.gson.internal.Excluder excludeFieldsWithoutExposeAnnotation()
+    98:108:public com.google.gson.internal.Excluder withExclusionStrategy(com.google.gson.ExclusionStrategy,boolean,boolean)
+com.google.gson.internal.Primitives:
+    32:32:private Primitives()
+    80:80:public static boolean isWrapperType(java.lang.reflect.Type)
+    113:115:public static java.lang.Class unwrap(java.lang.Class)
+com.google.gson.internal.Streams:
+    35:79:public Streams()
+    40:60:public static com.google.gson.JsonElement parse(com.google.gson.stream.JsonReader)
+com.google.gson.internal.StringMap:
+    private static final int MINIMUM_CAPACITY
+    private static final int MAXIMUM_CAPACITY
+com.google.gson.internal.bind.JsonTreeReader:
+    53:55:public JsonTreeReader(com.google.gson.JsonElement)
+com.google.gson.internal.bind.JsonTreeWriter:
+    163:167:public com.google.gson.stream.JsonWriter value(double)
+com.google.gson.internal.bind.TypeAdapters:
+    58:58:private TypeAdapters()
+    760:760:public static com.google.gson.TypeAdapterFactory newFactory(com.google.gson.reflect.TypeToken,com.google.gson.TypeAdapter)
+com.google.gson.internal.bind.TypeAdapters$23:
+    private static final java.lang.String YEAR
+    private static final java.lang.String MONTH
+    private static final java.lang.String DAY_OF_MONTH
+    private static final java.lang.String HOUR_OF_DAY
+    private static final java.lang.String MINUTE
+    private static final java.lang.String SECOND
+com.google.gson.internal.bind.TypeAdapters$27
+com.google.gson.reflect.TypeToken:
+    112:112:public boolean isAssignableFrom(java.lang.Class)
+    123:140:public boolean isAssignableFrom(java.lang.reflect.Type)
+    153:153:public boolean isAssignableFrom(com.google.gson.reflect.TypeToken)
+    161:178:private static boolean isAssignableFrom(java.lang.reflect.Type,java.lang.reflect.GenericArrayType)
+    188:231:private static boolean isAssignableFrom(java.lang.reflect.Type,java.lang.reflect.ParameterizedType,java.util.Map)
+    240:250:private static boolean typeEquals(java.lang.reflect.ParameterizedType,java.lang.reflect.ParameterizedType,java.util.Map)
+    257:265:private static varargs java.lang.AssertionError buildUnexpectedTypeError(java.lang.reflect.Type,java.lang.Class[])
+    273:273:private static boolean matches(java.lang.reflect.Type,java.lang.reflect.Type,java.util.Map)
+com.google.gson.stream.JsonReader:
+    private static final java.lang.String TRUE
+    private static final java.lang.String FALSE
+com.google.gson.stream.JsonWriter:
+    447:453:public com.google.gson.stream.JsonWriter value(double)
+com.google.gson.stream.MalformedJsonException:
+    private static final long serialVersionUID
+    33:37:public MalformedJsonException(java.lang.String,java.lang.Throwable)
+    39:43:public MalformedJsonException(java.lang.Throwable)
+net.louislam.android.InputListener
+net.louislam.android.L:
+    31:31:public L()
+    47:51:public static void startActivity(android.content.Context,java.lang.String)
+    63:65:public static void startActivity(android.content.Context,java.lang.Class)
+    78:79:public static void startActivity(android.app.Activity,java.lang.Class,int)
+    95:98:public static void startActivity(android.app.Activity,java.lang.Class,int,android.os.Bundle)
+    110:118:public static void alert(android.content.Context,java.lang.String)
+    127:136:public static void alert(android.content.Context,java.lang.String,android.content.DialogInterface$OnClickListener)
+    156:157:public static void inputDialog(android.content.Context,java.lang.String,net.louislam.android.InputListener)
+    167:195:public static void inputDialog(android.content.Context,java.lang.String,net.louislam.android.InputListener,java.lang.String)
+    215:220:public static android.app.AlertDialog$Builder confirmDialog(android.content.Context,java.lang.String)
+    231:237:public static android.app.AlertDialog$Builder confirmDialog(android.content.Context,java.lang.String,android.content.DialogInterface$OnClickListener)
+    247:252:public static android.app.ProgressDialog progressDialog(android.content.Context,java.lang.String)
+    262:263:public static void storeString(android.content.Context,java.lang.String,java.lang.String)
+    272:272:public static java.lang.String getString(android.content.Context,java.lang.String)
+    281:281:public static android.os.Bundle getBundle(android.app.Activity)
+    291:304:public static void log(java.lang.String)
+    311:312:public static void enableLog(boolean)
+    320:322:public static void openUrl(android.content.Context,java.lang.String)
+net.louislam.android.L$1
+net.louislam.android.L$2
+net.louislam.hkepc.AppLayout:
+    43:43:public java.lang.String content()
+    51:51:public org.jsoup.nodes.Document document()
+net.louislam.hkepc.AppSettings:
+    8:8:public AppSettings()
+net.louislam.hkepc.BuildConfig
+net.louislam.hkepc.Content:
+    26:26:public java.lang.String getContent()
+net.louislam.hkepc.HKEPC:
+    public static final java.lang.String URL
+    private android.widget.ProgressBar loadingIcon
+    89:89:public android.webkit.WebView getWebView()
+    96:97:public void setWebView(android.webkit.WebView)
+    270:270:public java.lang.String getContent()
+    444:445:public void showLoading()
+net.louislam.hkepc.Helper:
+    20:20:public Helper()
+    50:50:public static java.lang.String listViewItem(java.lang.String,java.lang.String)
+    54:54:public static java.lang.String listViewStartTag()
+    62:70:public static java.lang.String li(java.lang.String,java.lang.String,java.lang.String)
+    108:115:public static void log(java.lang.String)
+net.louislam.hkepc.MainActivity:
+    183:184:public void setMenu(android.view.Menu)
+net.louislam.hkepc.PostActivity:
+    public static final java.lang.String MSG
+net.louislam.hkepc.R
+net.louislam.hkepc.R$array
+net.louislam.hkepc.R$attr
+net.louislam.hkepc.R$color
+net.louislam.hkepc.R$dimen
+net.louislam.hkepc.R$drawable
+net.louislam.hkepc.R$id
+net.louislam.hkepc.R$layout
+net.louislam.hkepc.R$menu
+net.louislam.hkepc.R$string
+net.louislam.hkepc.R$style
+net.louislam.hkepc.R$styleable
+net.louislam.hkepc.R$xml
+net.louislam.hkepc.action.My
+net.louislam.hkepc.db.DatabaseHelper:
+    static final java.lang.String TAG
+    static final int DB_VERSION_NO
+    static final java.lang.String DB_NAME
+    static final java.lang.String TABLE_FORUM_LAST_READ
+    static final java.lang.String THREAD_ID
+    static final java.lang.String PAGE_NO
+    static final java.lang.String READ_TIME
+net.louislam.hkepc.util.SystemUiHider
+net.louislam.hkepc.util.SystemUiHider$1
+net.louislam.hkepc.util.SystemUiHider$OnVisibilityChangeListener
+net.louislam.hkepc.util.SystemUiHiderBase
+net.louislam.hkepc.util.SystemUiHiderHoneycomb
+net.louislam.hkepc.util.SystemUiHiderHoneycomb$1
+net.louislam.hkepc.util.Util:
+    static final java.lang.String TAG
+    5:5:public Util()
+org.jsoup.Connection:
+    public abstract org.jsoup.Connection url(java.net.URL)
+    public abstract org.jsoup.Connection userAgent(java.lang.String)
+    public abstract org.jsoup.Connection referrer(java.lang.String)
+    public abstract org.jsoup.Connection followRedirects(boolean)
+    public abstract org.jsoup.Connection ignoreHttpErrors(boolean)
+    public abstract org.jsoup.Connection ignoreContentType(boolean)
+    public abstract org.jsoup.Connection data(java.lang.String,java.lang.String)
+    public abstract org.jsoup.Connection header(java.lang.String,java.lang.String)
+    public abstract org.jsoup.Connection cookie(java.lang.String,java.lang.String)
+    public abstract org.jsoup.Connection parser(org.jsoup.parser.Parser)
+    public abstract org.jsoup.nodes.Document post()
+    public abstract org.jsoup.Connection$Request request()
+    public abstract org.jsoup.Connection request(org.jsoup.Connection$Request)
+    public abstract org.jsoup.Connection$Response response()
+    public abstract org.jsoup.Connection response(org.jsoup.Connection$Response)
+org.jsoup.Connection$Base:
+    public abstract java.lang.String header(java.lang.String)
+    public abstract org.jsoup.Connection$Base header(java.lang.String,java.lang.String)
+    public abstract boolean hasHeader(java.lang.String)
+    public abstract org.jsoup.Connection$Base removeHeader(java.lang.String)
+    public abstract java.lang.String cookie(java.lang.String)
+    public abstract boolean hasCookie(java.lang.String)
+    public abstract org.jsoup.Connection$Base removeCookie(java.lang.String)
+org.jsoup.Connection$KeyVal:
+    public abstract org.jsoup.Connection$KeyVal key(java.lang.String)
+    public abstract org.jsoup.Connection$KeyVal value(java.lang.String)
+org.jsoup.Connection$Request:
+    public abstract org.jsoup.Connection$Request followRedirects(boolean)
+    public abstract org.jsoup.Connection$Request ignoreHttpErrors(boolean)
+    public abstract org.jsoup.Connection$Request ignoreContentType(boolean)
+    public abstract org.jsoup.Connection$Request parser(org.jsoup.parser.Parser)
+org.jsoup.Connection$Response:
+    public abstract int statusCode()
+    public abstract java.lang.String statusMessage()
+    public abstract java.lang.String charset()
+    public abstract java.lang.String contentType()
+    public abstract java.lang.String body()
+    public abstract byte[] bodyAsBytes()
+org.jsoup.HttpStatusException:
+    19:19:public int getStatusCode()
+    23:23:public java.lang.String getUrl()
+org.jsoup.Jsoup:
+    20:20:private Jsoup()
+    31:31:public static org.jsoup.nodes.Document parse(java.lang.String,java.lang.String)
+    45:45:public static org.jsoup.nodes.Document parse(java.lang.String,java.lang.String,org.jsoup.parser.Parser)
+    88:88:public static org.jsoup.nodes.Document parse(java.io.File,java.lang.String,java.lang.String)
+    103:103:public static org.jsoup.nodes.Document parse(java.io.File,java.lang.String)
+    118:118:public static org.jsoup.nodes.Document parse(java.io.InputStream,java.lang.String,java.lang.String)
+    135:135:public static org.jsoup.nodes.Document parse(java.io.InputStream,java.lang.String,java.lang.String,org.jsoup.parser.Parser)
+    148:148:public static org.jsoup.nodes.Document parseBodyFragment(java.lang.String,java.lang.String)
+    160:160:public static org.jsoup.nodes.Document parseBodyFragment(java.lang.String)
+    181:183:public static org.jsoup.nodes.Document parse(java.net.URL,int)
+    198:201:public static java.lang.String clean(java.lang.String,java.lang.String,org.jsoup.safety.Whitelist)
+    215:215:public static java.lang.String clean(java.lang.String,org.jsoup.safety.Whitelist)
+    231:235:public static java.lang.String clean(java.lang.String,java.lang.String,org.jsoup.safety.Whitelist,org.jsoup.nodes.Document$OutputSettings)
+    247:249:public static boolean isValid(java.lang.String,org.jsoup.safety.Whitelist)
+org.jsoup.UnsupportedMimeTypeException:
+    19:19:public java.lang.String getMimeType()
+    23:23:public java.lang.String getUrl()
+org.jsoup.examples.HtmlToPlainText
+org.jsoup.examples.HtmlToPlainText$1
+org.jsoup.examples.HtmlToPlainText$FormattingVisitor
+org.jsoup.examples.ListLinks
+org.jsoup.helper.DataUtil:
+    static final java.lang.String defaultCharset
+    private static final int bufferSize
+    23:23:private DataUtil()
+    34:41:public static org.jsoup.nodes.Document load(java.io.File,java.lang.String,java.lang.String)
+    54:55:public static org.jsoup.nodes.Document load(java.io.InputStream,java.lang.String,java.lang.String)
+    68:69:public static org.jsoup.nodes.Document load(java.io.InputStream,java.lang.String,java.lang.String,org.jsoup.parser.Parser)
+org.jsoup.helper.HttpConnection:
+    32:34:public static org.jsoup.Connection connect(java.net.URL)
+    46:47:public org.jsoup.Connection url(java.net.URL)
+    61:63:public org.jsoup.Connection userAgent(java.lang.String)
+    72:73:public org.jsoup.Connection followRedirects(boolean)
+    77:79:public org.jsoup.Connection referrer(java.lang.String)
+    88:89:public org.jsoup.Connection ignoreHttpErrors(boolean)
+    93:94:public org.jsoup.Connection ignoreContentType(boolean)
+    98:99:public org.jsoup.Connection data(java.lang.String,java.lang.String)
+    124:125:public org.jsoup.Connection header(java.lang.String,java.lang.String)
+    129:130:public org.jsoup.Connection cookie(java.lang.String,java.lang.String)
+    142:143:public org.jsoup.Connection parser(org.jsoup.parser.Parser)
+    153:155:public org.jsoup.nodes.Document post()
+    164:164:public org.jsoup.Connection$Request request()
+    168:169:public org.jsoup.Connection request(org.jsoup.Connection$Request)
+    173:173:public org.jsoup.Connection$Response response()
+    177:178:public org.jsoup.Connection response(org.jsoup.Connection$Response)
+org.jsoup.helper.HttpConnection$Base:
+    267:268:public java.lang.String cookie(java.lang.String)
+    284:286:public org.jsoup.Connection$Base removeCookie(java.lang.String)
+org.jsoup.helper.HttpConnection$KeyVal:
+    646:648:public org.jsoup.helper.HttpConnection$KeyVal key(java.lang.String)
+    656:658:public org.jsoup.helper.HttpConnection$KeyVal value(java.lang.String)
+    630:630:public bridge synthetic org.jsoup.Connection$KeyVal value(java.lang.String)
+    630:630:public bridge synthetic org.jsoup.Connection$KeyVal key(java.lang.String)
+org.jsoup.helper.HttpConnection$Request:
+    326:327:public org.jsoup.Connection$Request followRedirects(boolean)
+    335:336:public org.jsoup.Connection$Request ignoreHttpErrors(boolean)
+    344:345:public org.jsoup.Connection$Request ignoreContentType(boolean)
+    359:360:public org.jsoup.helper.HttpConnection$Request parser(org.jsoup.parser.Parser)
+    294:294:public bridge synthetic java.lang.String cookie(java.lang.String)
+    294:294:public bridge synthetic org.jsoup.Connection$Request parser(org.jsoup.parser.Parser)
+org.jsoup.helper.HttpConnection$Response:
+    private static final int MAX_REDIRECTS
+    464:464:public int statusCode()
+    468:468:public java.lang.String statusMessage()
+    472:472:public java.lang.String charset()
+    488:496:public java.lang.String body()
+    500:501:public byte[] bodyAsBytes()
+    368:368:public bridge synthetic java.lang.String cookie(java.lang.String)
+org.jsoup.helper.StringUtil:
+    9:9:public StringUtil()
+org.jsoup.helper.Validate:
+    8:8:private Validate()
+org.jsoup.nodes.Attribute:
+    41:43:public void setKey(java.lang.String)
+    95:96:public static org.jsoup.nodes.Attribute createFromEncoded(java.lang.String,java.lang.String)
+    100:100:protected boolean isDataAttribute()
+org.jsoup.nodes.Attributes:
+    protected static final java.lang.String dataPrefix
+    66:70:public void remove(java.lang.String)
+    129:129:public java.util.Map dataset()
+    247:247:private static java.lang.String dataKey(java.lang.String)
+    17:17:static synthetic java.util.LinkedHashMap access$100(org.jsoup.nodes.Attributes)
+    17:17:static synthetic java.util.LinkedHashMap access$102(org.jsoup.nodes.Attributes,java.util.LinkedHashMap)
+    17:17:static synthetic java.lang.String access$300(java.lang.String)
+org.jsoup.nodes.Attributes$1
+org.jsoup.nodes.Attributes$Dataset
+org.jsoup.nodes.Attributes$Dataset$DatasetIterator
+org.jsoup.nodes.Attributes$Dataset$EntrySet
+org.jsoup.nodes.Comment:
+    private static final java.lang.String COMMENT_KEY
+org.jsoup.nodes.DataNode:
+    private static final java.lang.String DATA_KEY
+    38:39:public org.jsoup.nodes.DataNode setWholeData(java.lang.String)
+    59:60:public static org.jsoup.nodes.DataNode createFromEncoded(java.lang.String,java.lang.String)
+org.jsoup.nodes.Document:
+    37:44:public static org.jsoup.nodes.Document createShell(java.lang.String)
+    52:52:public org.jsoup.nodes.Element head()
+    69:70:public java.lang.String title()
+    79:86:public void title(java.lang.String)
+    94:94:public org.jsoup.nodes.Element createElement(java.lang.String)
+    103:120:public org.jsoup.nodes.Document normalise()
+    125:140:private void normaliseTextNodes(org.jsoup.nodes.Element)
+    144:162:private void normaliseStructure(java.lang.String,org.jsoup.nodes.Element)
+    345:347:public org.jsoup.nodes.Document outputSettings(org.jsoup.nodes.Document$OutputSettings)
+org.jsoup.nodes.Document$OutputSettings:
+    236:237:public org.jsoup.nodes.Document$OutputSettings escapeMode(org.jsoup.nodes.Entities$EscapeMode)
+    293:294:public org.jsoup.nodes.Document$OutputSettings prettyPrint(boolean)
+    311:313:public org.jsoup.nodes.Document$OutputSettings indentAmount(int)
+org.jsoup.nodes.Element:
+    78:80:public org.jsoup.nodes.Element tagName(java.lang.String)
+    137:137:public java.util.Map dataset()
+    150:152:public org.jsoup.select.Elements parents()
+    156:161:private static void accumulateParents(org.jsoup.nodes.Element,org.jsoup.select.Elements)
+    174:174:public org.jsoup.nodes.Element child(int)
+    212:217:public java.util.List textNodes()
+    229:234:public java.util.List dataNodes()
+    278:281:public org.jsoup.nodes.Element prependChild(org.jsoup.nodes.Node)
+    292:294:public org.jsoup.nodes.Element appendElement(java.lang.String)
+    305:307:public org.jsoup.nodes.Element prependElement(java.lang.String)
+    317:319:public org.jsoup.nodes.Element appendText(java.lang.String)
+    329:331:public org.jsoup.nodes.Element prependText(java.lang.String)
+    355:359:public org.jsoup.nodes.Element prepend(java.lang.String)
+    371:371:public org.jsoup.nodes.Element before(java.lang.String)
+    405:405:public org.jsoup.nodes.Element after(org.jsoup.nodes.Node)
+    425:425:public org.jsoup.nodes.Element wrap(java.lang.String)
+    434:442:public org.jsoup.select.Elements siblingElements()
+    486:487:public org.jsoup.nodes.Element firstElementSibling()
+    505:506:public org.jsoup.nodes.Element lastElementSibling()
+    529:532:public org.jsoup.select.Elements getElementsByTag(java.lang.String)
+    545:551:public org.jsoup.nodes.Element getElementById(java.lang.String)
+    566:568:public org.jsoup.select.Elements getElementsByClass(java.lang.String)
+    578:581:public org.jsoup.select.Elements getElementsByAttribute(java.lang.String)
+    591:594:public org.jsoup.select.Elements getElementsByAttributeStarting(java.lang.String)
+    605:605:public org.jsoup.select.Elements getElementsByAttributeValue(java.lang.String,java.lang.String)
+    616:616:public org.jsoup.select.Elements getElementsByAttributeValueNot(java.lang.String,java.lang.String)
+    627:627:public org.jsoup.select.Elements getElementsByAttributeValueStarting(java.lang.String,java.lang.String)
+    638:638:public org.jsoup.select.Elements getElementsByAttributeValueEnding(java.lang.String,java.lang.String)
+    649:649:public org.jsoup.select.Elements getElementsByAttributeValueContaining(java.lang.String,java.lang.String)
+    659:659:public org.jsoup.select.Elements getElementsByAttributeValueMatching(java.lang.String,java.util.regex.Pattern)
+    672:676:public org.jsoup.select.Elements getElementsByAttributeValueMatching(java.lang.String,java.lang.String)
+    685:685:public org.jsoup.select.Elements getElementsByIndexLessThan(int)
+    694:694:public org.jsoup.select.Elements getElementsByIndexGreaterThan(int)
+    703:703:public org.jsoup.select.Elements getElementsByIndexEquals(int)
+    714:714:public org.jsoup.select.Elements getElementsContainingText(java.lang.String)
+    725:725:public org.jsoup.select.Elements getElementsContainingOwnText(java.lang.String)
+    735:735:public org.jsoup.select.Elements getElementsMatchingText(java.util.regex.Pattern)
+    747:751:public org.jsoup.select.Elements getElementsMatchingText(java.lang.String)
+    761:761:public org.jsoup.select.Elements getElementsMatchingOwnText(java.util.regex.Pattern)
+    773:777:public org.jsoup.select.Elements getElementsMatchingOwnText(java.lang.String)
+    888:899:public boolean hasText()
+    909:921:public java.lang.String data()
+    993:999:public org.jsoup.nodes.Element removeClass(java.lang.String)
+    1008:1017:public org.jsoup.nodes.Element toggleClass(java.lang.String)
+    1025:1028:public java.lang.String val()
+    1037:1041:public org.jsoup.nodes.Element val(java.lang.String)
+    24:24:public bridge synthetic org.jsoup.nodes.Node wrap(java.lang.String)
+    24:24:public bridge synthetic org.jsoup.nodes.Node after(org.jsoup.nodes.Node)
+    24:24:public bridge synthetic org.jsoup.nodes.Node before(java.lang.String)
+org.jsoup.nodes.Entities:
+    97:97:static java.lang.String unescape(java.lang.String)
+    107:107:static java.lang.String unescape(java.lang.String,boolean)
+org.jsoup.nodes.Node:
+    121:123:public org.jsoup.nodes.Node removeAttr(java.lang.String)
+    219:219:protected org.jsoup.nodes.Node[] childNodesAsArray()
+    258:259:public org.jsoup.nodes.Node before(java.lang.String)
+    294:298:public org.jsoup.nodes.Node after(org.jsoup.nodes.Node)
+    316:337:public org.jsoup.nodes.Node wrap(java.lang.String)
+    354:361:public org.jsoup.nodes.Node unwrap()
+    365:369:private org.jsoup.nodes.Element getDeepChild(org.jsoup.nodes.Element)
+    377:380:public void replaceWith(org.jsoup.nodes.Node)
+    389:399:protected void replaceChild(org.jsoup.nodes.Node,org.jsoup.nodes.Node)
+    446:454:public java.util.List siblingNodes()
+    479:488:public org.jsoup.nodes.Node previousSibling()
+org.jsoup.nodes.TextNode:
+    private static final java.lang.String TEXT_KEY
+    41:41:public java.lang.String text()
+    50:53:public org.jsoup.nodes.TextNode text(java.lang.String)
+    79:89:public org.jsoup.nodes.TextNode splitText(int)
+    115:116:public static org.jsoup.nodes.TextNode createFromEncoded(java.lang.String,java.lang.String)
+    166:167:public org.jsoup.nodes.Node removeAttr(java.lang.String)
+org.jsoup.nodes.XmlDeclaration
+org.jsoup.parser.CharacterReader:
+    static final char EOF
+    59:59:java.lang.String consumeAsString()
+org.jsoup.parser.HtmlTreeBuilder:
+    496:497:void setPendingTableCharacters(java.util.List)
+org.jsoup.parser.ParseError:
+    25:25:public java.lang.String getErrorMessage()
+    33:33:public int getPosition()
+org.jsoup.parser.ParseErrorList:
+    private static final int INITIAL_CAPACITY
+    24:24:int getMaxSize()
+org.jsoup.parser.Parser:
+    private static final int DEFAULT_MAX_ERRORS
+    40:40:public org.jsoup.parser.TreeBuilder getTreeBuilder()
+    49:50:public org.jsoup.parser.Parser setTreeBuilder(org.jsoup.parser.TreeBuilder)
+    67:68:public org.jsoup.parser.Parser setTrackErrors(int)
+    76:76:public java.util.List getErrors()
+    117:124:public static org.jsoup.nodes.Document parseBodyFragment(java.lang.String,java.lang.String)
+    134:135:public static java.lang.String unescapeEntities(java.lang.String,boolean)
+    146:146:public static org.jsoup.nodes.Document parseBodyFragmentRelaxed(java.lang.String,java.lang.String)
+    166:166:public static org.jsoup.parser.Parser xmlParser()
+org.jsoup.parser.Tag:
+    89:89:public boolean canContainBlock()
+    98:98:public boolean isInline()
+    107:107:public boolean isData()
+    116:116:public boolean isEmpty()
+org.jsoup.parser.TokenQueue:
+    private static final char ESC
+    43:43:public char peek()
+    51:52:public void addFirst(java.lang.Character)
+    60:62:public void addFirst(java.lang.String)
+    79:79:public boolean matchesCS(java.lang.String)
+    109:109:public boolean matchesStartTag()
+    147:148:public void advance()
+    192:213:public java.lang.String consumeToIgnoreCase(java.lang.String)
+    248:250:public java.lang.String chompToIgnoreCase(java.lang.String)
+    321:324:public java.lang.String consumeWord()
+    333:337:public java.lang.String consumeTagName()
+    371:375:public java.lang.String consumeAttributeKey()
+org.jsoup.parser.Tokeniser:
+    static final char replacementChar
+    84:84:org.jsoup.parser.TokeniserState getState()
+    219:219:boolean currentNodeInHtmlNS()
+    230:242:java.lang.String unescapeEntities(boolean)
+org.jsoup.parser.TokeniserState:
+    private static final char nullChar
+    private static final char replacementChar
+    private static final char eof
+org.jsoup.parser.TreeBuilder:
+    36:36:org.jsoup.nodes.Document parse(java.lang.String,java.lang.String)
+org.jsoup.parser.XmlTreeBuilder
+org.jsoup.parser.XmlTreeBuilder$1
+org.jsoup.safety.Cleaner
+org.jsoup.safety.Cleaner$ElementMeta
+org.jsoup.safety.Whitelist
+org.jsoup.safety.Whitelist$AttributeKey
+org.jsoup.safety.Whitelist$AttributeValue
+org.jsoup.safety.Whitelist$Protocol
+org.jsoup.safety.Whitelist$TagName
+org.jsoup.safety.Whitelist$TypedValue
+org.jsoup.select.Collector:
+    13:14:private Collector()
+org.jsoup.select.CombiningEvaluator$Or:
+    66:71:CombiningEvaluator$Or(java.util.Collection)
+org.jsoup.select.Elements:
+    22:24:public Elements(int)
+    35:36:public varargs Elements(org.jsoup.nodes.Element[])
+    71:75:public boolean hasAttr(java.lang.String)
+    85:88:public org.jsoup.select.Elements attr(java.lang.String,java.lang.String)
+    97:100:public org.jsoup.select.Elements removeAttr(java.lang.String)
+    109:112:public org.jsoup.select.Elements addClass(java.lang.String)
+    121:124:public org.jsoup.select.Elements removeClass(java.lang.String)
+    133:136:public org.jsoup.select.Elements toggleClass(java.lang.String)
+    145:149:public boolean hasClass(java.lang.String)
+    158:161:public java.lang.String val()
+    170:172:public org.jsoup.select.Elements val(java.lang.String)
+    194:198:public boolean hasText()
+    251:254:public org.jsoup.select.Elements tagName(java.lang.String)
+    264:267:public org.jsoup.select.Elements html(java.lang.String)
+    277:280:public org.jsoup.select.Elements prepend(java.lang.String)
+    290:293:public org.jsoup.select.Elements append(java.lang.String)
+    303:306:public org.jsoup.select.Elements before(java.lang.String)
+    316:319:public org.jsoup.select.Elements after(java.lang.String)
+    332:336:public org.jsoup.select.Elements wrap(java.lang.String)
+    353:356:public org.jsoup.select.Elements unwrap()
+    371:374:public org.jsoup.select.Elements empty()
+    418:419:public org.jsoup.select.Elements not(java.lang.String)
+    430:430:public org.jsoup.select.Elements eq(int)
+    439:440:public boolean is(java.lang.String)
+    448:452:public org.jsoup.select.Elements parents()
+    469:469:public org.jsoup.nodes.Element last()
+    478:483:public org.jsoup.select.Elements traverse(org.jsoup.select.NodeVisitor)
+org.jsoup.select.Selector:
+    106:118:static org.jsoup.select.Elements filterOut(java.util.Collection,java.util.Collection)
