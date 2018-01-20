@@ -68,7 +68,7 @@ public abstract class HKEPC extends Activity {
 	};
 	
 	/** Default base url */
-	public final static String URL = "http://www.hkepc.com/forum/";
+	public final static String URL = "https://www.hkepc.com/forum/";
 	
 	/** WebView */
 	protected WebView webView;
