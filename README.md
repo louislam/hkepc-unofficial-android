@@ -2,7 +2,7 @@ HKEPC for Android (Unofficial)
 ===================
 
 ## Tools ##
-IDE: IntelliJ IDEA Community Edition 12.1.4
+IDE: Android Studio 3.3
 
 
 
