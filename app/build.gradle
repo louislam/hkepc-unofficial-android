@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 26
 
     defaultConfig {
         applicationId "net.louislam.hkepc"
-        minSdkVersion 8
-        targetSdkVersion 17
+        minSdkVersion 17
+        targetSdkVersion 26
     }
 
     buildTypes {

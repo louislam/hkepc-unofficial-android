@@ -99,6 +99,11 @@ public class ViewThread extends Page {
 					img.attr("src", img.attr("src"));
 				}
 
+				// handle protocol-relative path
+				if (img.attr("src").startsWith("//")) {
+					img.attr("src", "https:" + img.attr("src"));
+				}
+
 				if ( ! img.attr("src").startsWith("http")) {
 					img.attr("src", HKEPC.URL + img.attr("src"));
 				}
