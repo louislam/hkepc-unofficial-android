@@ -75,7 +75,7 @@ public class ForumDisplay extends Page {
 				//update the thread link to last read page
 				item.attr("href", link + getPageSuffix(threadId));
 
-				Log.d("FD", "Update link: " + item.attr("href"));
+				//Log.d("FD", "Update link: " + item.attr("href"));
 
 				sb.append(item.html(item.html() +
 					"<br /><span class=\"box\">" + author.html() + "</span> " +

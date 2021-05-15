@@ -4,6 +4,7 @@ public class Content {
 	
 	private String url;
 	private String content;
+	private int scrollPosition = 0;
 	
 	/**
 	 * @return the url
@@ -32,7 +33,12 @@ public class Content {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
-	
+
+	public int getScrollPosition() {
+		return scrollPosition;
+	}
+
+	public void setScrollPosition(int scrollPosition) {
+		this.scrollPosition = scrollPosition;
+	}
 }

@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-        Log.d(TAG, "read - thread: " + threadId + "page: " + pageNo);
+        //Log.d(TAG, "read - thread: " + threadId + "page: " + pageNo);
         return pageNo;
     }
 }

@@ -145,6 +145,10 @@ public abstract class HKEPC extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && BuildConfig.DEBUG) {
+			WebView.setWebContentsDebuggingEnabled(true);
+		}
+
 		contentStack = new Stack<Content>();
 		
 		webView = (WebView) findViewById(R.id.webView1);
@@ -169,6 +173,12 @@ public abstract class HKEPC extends Activity {
 				    super.onPageFinished(view, url);
 				    webViewPageLoadDone();
 				    //loadingDialog.hide();
+
+					if (currentContent != null) {
+						scrollTo(currentContent.getScrollPosition());
+
+					}
+
 			    }
 			    
 			    @Override
@@ -185,6 +195,16 @@ public abstract class HKEPC extends Activity {
 		loadingDialog.setIndeterminate(true);
 		loadingDialog.setCanceledOnTouchOutside(true);
 
+	}
+
+	private void scrollTo(final int yLocation) {
+		webView.postDelayed(new Runnable () {
+			@Override
+			public void run() {
+				webView.scrollTo(0, yLocation);
+				L.log("Scroll To: " + currentContent.getScrollPosition());
+			}
+		}, 50);
 	}
 	
 	public abstract void webViewPageLoadDone();
@@ -212,6 +232,7 @@ public abstract class HKEPC extends Activity {
 		}
 	
 		if (currentContent != null) {
+			currentContent.setScrollPosition(webView.getScrollY());
 			contentStack.add(currentContent);
 		}
 
@@ -227,6 +248,7 @@ public abstract class HKEPC extends Activity {
 			currentContent = contentStack.pop();
 			this.setContent(currentContent.getContent());
 			this.loadPage();
+
 		}
 	}
 	
@@ -340,7 +362,7 @@ public abstract class HKEPC extends Activity {
 			currentContent = contentStack.pop();
 			return;
 		}
-		
+
 		currentContent.setContent(content);
 		this.setContent(content);
 		this.loadPage();
