@@ -53,8 +53,7 @@
         android:autoLink="web"
         android:minHeight="48dp"
         android:text="https://github.com/louislam/hkepc-unofficial-android"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:web />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView3"
