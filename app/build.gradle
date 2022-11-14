@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "net.louislam.hkepc"
         minSdkVersion 17
-        targetSdkVersion 30
+        targetSdkVersion 33
+        versionCode 37
+        versionName "1.5.0"
     }
 
     buildTypes {
@@ -20,13 +22,18 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.2.2'
-    compile files('libs/GoogleAdMobAdsSdk-6.4.1.jar')
-    compile files('libs/jsoup-1.7.1.jar')
-    compile files('libs/libGoogleAnalyticsServices.jar')
-    compile files('libs/louislam-lazy-library-1.0.jar')
-    compile files('libs/mc.inappbilling-1.0.1.jar')
+    implementation 'com.google.code.gson:gson:2.2.2'
+    implementation files('libs/GoogleAdMobAdsSdk-6.4.1.jar')
+    implementation files('libs/jsoup-1.7.1.jar')
+    implementation files('libs/libGoogleAnalyticsServices.jar')
+    implementation files('libs/louislam-lazy-library-1.0.jar')
+    implementation files('libs/mc.inappbilling-1.0.1.jar')
 }
