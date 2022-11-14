@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
 >
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/logo" />
-
-    <EditText
-        android:id="@+id/username"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="帳號" >
+        android:layout_marginBottom="10dp"
+        android:hint="帳號">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="20dp"
+            android:imeOptions="actionNext"
+            android:ems="10"
+            android:minHeight="48dp"
+            >
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/password"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="密碼"
-        android:inputType="textPassword" />
+        android:hint="密碼">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="登入" />
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:text="登入"
+        android:textColor="#37474F" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

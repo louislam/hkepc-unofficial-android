@@ -2,21 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-           
-            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/textView2"
@@ -34,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="版本: 1.4.1"
+        tools:text="版本: 1.4.1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -48,23 +41,27 @@
     <TextView
         android:id="@+id/TextView03"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
+        android:layout_weight="0.22"
         android:text="Louis Lam (始創人), goofyz, max918"
-        android:textAppearance="?android:attr/textAppearanceMedium" android:layout_weight="0.22"/>
-    
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:autoLink="web"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"   
-        android:textAppearance="?android:attr/textAppearanceMedium"     
-        android:text="http://louislam.net" />
+        android:minHeight="48dp"
+        android:text="https://github.com/louislam/hkepc-unofficial-android"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:web />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
+        android:autoLink="web"
         android:layout_height="wrap_content"
-          android:layout_marginTop="40dp"
+        android:layout_marginTop="40dp"
         android:text="註: 本程式屬非官方程式。本程式不會收集任何個人資料或經第三方何服器。" />
  
 </LinearLayout>
