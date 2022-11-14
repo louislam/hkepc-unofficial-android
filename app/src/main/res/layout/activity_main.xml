@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
 	>
-
 
 	<LinearLayout
 		android:id="@+id/container"
@@ -10,7 +10,6 @@
 		android:layout_height="fill_parent"
 		android:orientation="vertical"
 		>
-
 
 		<LinearLayout
 			android:id="@+id/fakeBar"
@@ -24,7 +23,8 @@
 				android:id="@+id/imageView1"
 				android:layout_width="33dp"
 				android:layout_height="33dp"
-				android:src="@drawable/ic_launcher"/>
+				android:src="@drawable/ic_launcher"
+				android:contentDescription="No" />
 
 			<TextView
 				android:id="@+id/textView1"
@@ -37,14 +37,11 @@
 
 		</LinearLayout>
 
-
 		<WebView
 			android:id="@+id/webView1"
 			android:layout_width="fill_parent"
 			android:layout_height="0dp"
 			android:layout_weight="1"/>
-
-
 
 		<LinearLayout
 			android:id="@+id/panel"
@@ -56,8 +53,8 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:inputType="textMultiLine">
-			</EditText>
+				android:inputType="textMultiLine"
+				tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></EditText>
 
 			<Button
 				android:id="@+id/replyButton"
@@ -80,8 +77,6 @@
 				android:text="X"
 				android:id="@+id/button_close_ad" android:singleLine="false" android:background="#ffffff" android:layout_alignParentTop="true" android:layout_alignParentRight="true"/>
 		</RelativeLayout >
-
-
 	</LinearLayout>
 
 	<ProgressBar

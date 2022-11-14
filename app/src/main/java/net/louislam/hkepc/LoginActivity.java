@@ -7,23 +7,22 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * 
  * @author Louis Lam
  */
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends AppCompatActivity implements OnClickListener {
 	
 	private EditText username, password;
 	private Button button;

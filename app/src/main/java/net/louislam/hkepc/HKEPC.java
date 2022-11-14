@@ -1,6 +1,5 @@
 package net.louislam.hkepc;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import net.louislam.android.L;
 import net.louislam.hkepc.page.*;
@@ -38,7 +40,7 @@ import java.util.Timer;
  * @author Louis Lam
  *
  */
-public abstract class HKEPC extends Activity {
+public abstract class HKEPC extends AppCompatActivity {
 	
 	/** Page Handler (討論區) */
 	protected static final Page[] pageHandlers = { 

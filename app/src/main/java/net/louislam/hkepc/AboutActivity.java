@@ -1,15 +1,16 @@
 package net.louislam.hkepc;
 
 import net.louislam.android.L;
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**
 *
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends AppCompatActivity {
 
 	TextView textViewVersion;
 	

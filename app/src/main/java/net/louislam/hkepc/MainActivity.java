@@ -15,12 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import com.android.vending.billing.IInAppBillingService;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
-import com.google.ads.mediation.admob.AdMobAdapterExtras;
-import com.google.analytics.tracking.android.EasyTracker;
+
 import net.louislam.android.L;
 import net.louislam.hkepc.action.*;
 import net.louislam.hkepc.page.Page;
@@ -55,16 +50,11 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	/** */
 	private boolean hasLoggedIn;
 
-
 	private Button closeAdButton;
 
-	private AdView adView;
 	private RelativeLayout adLayout;
 
-	private IInAppBillingService mService;
 	private ServiceConnection mServiceConn;
-
-	private GooglePlay googlePlay;
 
 	private AlertDialog.Builder closeAdsDialog;
 
@@ -103,23 +93,9 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
 		firstRun();
-
-		if (Build.VERSION.SDK_INT >= 11) {
-			
-		} else {
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
-		
 		super.onCreate(savedInstanceState);
-		
-		if (Build.VERSION.SDK_INT >= 11) {
-			styleActionBar();
-		} else {
-			LinearLayout fakeBar = (LinearLayout) findViewById(R.id.fakeBar);
-			fakeBar.setVisibility(LinearLayout.VISIBLE);
-		}
+		styleActionBar();
 
 		adLayout = (RelativeLayout) findViewById(R.id.adLayout);
 		replyButton = (Button) findViewById(R.id.replyButton);
@@ -139,12 +115,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		else {
 			this.loadNewUrl(data.toString());
 		}
-
-		googlePlay = new GooglePlay(this);
-		googlePlay.checkAds();
-
-		EasyTracker.getInstance(this).activityStart(this);
-
 	}
 
 	public void ads(boolean display) {
@@ -170,7 +140,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			alert.setNegativeButton("永久移除廣告", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					googlePlay.buyNoAds();
+
 				}
 			});
 
@@ -184,18 +154,9 @@ public class MainActivity extends HKEPC implements OnClickListener {
 			closeAdsDialog = alert;
 		}
 
-
-
-		// 建立 adView
-		adView = new AdView(this, AdSize.BANNER, "a152cd6f14893c0");
-		//adView
-
 		// 查詢 LinearLayout (假設您已經提供)
 		// 屬性是 android:id="@+id/mainLayout"
 		final RelativeLayout layout = adLayout;
-
-		// 在其中加入 adView
-		layout.addView(adView);
 
 		Set<String> keywords = new TreeSet<String>();
 		keywords.add("電腦");
@@ -212,18 +173,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		keywords.add("顯卡");
 		keywords.add("game");
 
-		AdRequest adRequest = new AdRequest();
-		adRequest.setKeywords(keywords);
-
-
-		// AdMob network
-		AdMobAdapterExtras adMob = new AdMobAdapterExtras();
-		adRequest.setNetworkExtras(adMob);
-
-		// 啟用泛用請求，並隨廣告一起載入
-		adView.loadAd(adRequest);
-
-
 		closeAdButton = (Button) findViewById(R.id.button_close_ad);
 		closeAdButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -234,14 +183,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 		adLayout.setVisibility(RelativeLayout.VISIBLE);
 		timer.schedule(new timerTask(), 900000);
-
 	}
 
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-
 	}
 
 
@@ -285,18 +232,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	@Override
 	public void onAttachedToWindow() {
 	    super.onAttachedToWindow();
-	    
-	    if (Build.VERSION.SDK_INT < 11) {
-		    this.openOptionsMenu();
-		    this.closeOptionsMenu();
-	    }
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//Log.v("menu", menu.toString());
 		MenuInflater inflater = this.getMenuInflater();
-		inflater.inflate(R.layout.menu, menu);
+		inflater.inflate(R.menu.menu, menu);
 		this.menu = menu;
 
 		if (AppSettings.get(this, "SavingMode").equals("true")) {
@@ -308,7 +249,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 
 
 	public void buy() {
-		googlePlay.buyNoAds();
+
 	}
 
 
@@ -412,12 +353,15 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	 * For Android 4.0 only
 	 */
 	public void styleActionBar() {
-		ActionBar bar = this.getActionBar();
+		var bar = this.getSupportActionBar();
 
-		ColorDrawable cd = new ColorDrawable();
-		cd.setColor(Color.rgb(142, 195, 31));
-		bar.setBackgroundDrawable(cd);
-		bar.setDisplayHomeAsUpEnabled(true);
+		if (bar != null) {
+			bar.setIcon(R.drawable.ic_launcher);
+			ColorDrawable cd = new ColorDrawable();
+			cd.setColor(Color.rgb(142, 195, 31));
+			bar.setBackgroundDrawable(cd);
+			bar.setDisplayHomeAsUpEnabled(true);
+		}
 	}
 
 	@Override
@@ -434,7 +378,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		}
 	}
 
-
 	@Override
 	public void replyDone() {
 		replyEditText.setText("");
@@ -449,8 +392,5 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	@Override
 	public void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(this).activityStop(this);
 	}
-
-	
 }

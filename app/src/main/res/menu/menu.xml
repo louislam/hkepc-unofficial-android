@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/refresh"
+        android:title="重新整理"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/username"
+        android:title="username"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/msg"
+        android:title="短訊"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/login"
+        android:title="登入"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/viewInBrowser"
+        android:title="桌面版網站"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/savingMode"
+        android:title="節流模式"
+        android:checkable="true"
+        app:showAsAction="never|withText" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="登出"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/About"
+        android:title="關於"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/remove_ads"
+        android:title="永久移除廣告"
+        android:visible="false"
+        app:showAsAction="ifRoom|withText" />
+
+</menu>

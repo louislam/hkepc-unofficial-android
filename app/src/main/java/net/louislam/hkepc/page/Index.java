@@ -22,12 +22,6 @@ public class Index extends Page {
 		
 		Elements groups = doc.select(".group");
 
-		sb.append(Helper.listViewDivider("首頁"));
-		sb.append("<li><a href=\"http://www.hkepc.com/moreNews\"><img class='icon' src='file:///android_asset/images/news.png' alt='' /><span>新聞中心</span></a></li>");
-		sb.append("<li><a href=\"http://www.hkepc.com/review\"><img class='icon' src='file:///android_asset/images/truck.png' alt='' /><span>新品快遞</span></a></li>");
-		sb.append("<li><a href=\"http://www.hkepc.com/coverStory\"><img class='icon' src='file:///android_asset/images/news.png' alt='' /><span>專題報導</span></a></a></li>");
-
-
 		for (Element g : groups) {
 			sb.append(Helper.listViewDivider(g.select("a").text()));
 			
