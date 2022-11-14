@@ -7,8 +7,8 @@ android {
         applicationId "net.louislam.hkepc"
         minSdkVersion 17
         targetSdkVersion 33
-        versionCode 37
-        versionName "1.5.0"
+        versionCode 39
+        versionName "1.7.0"
     }
 
     buildTypes {
@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.google.code.gson:gson:2.10'
     implementation files('libs/jsoup-1.7.1.jar')
     implementation files('libs/louislam-lazy-library-1.0.jar')

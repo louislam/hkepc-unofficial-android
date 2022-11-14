@@ -250,7 +250,6 @@ public abstract class HKEPC extends AppCompatActivity {
 			currentContent = contentStack.pop();
 			this.setContent(currentContent.getContent());
 			this.loadPage();
-
 		}
 	}
 	
@@ -389,6 +388,8 @@ public abstract class HKEPC extends AppCompatActivity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
 		// Login
 		if (requestCode == 1234 && resultCode == RESULT_OK) {
 

@@ -50,15 +50,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	/** */
 	private boolean hasLoggedIn;
 
-	private Button closeAdButton;
-
-	private RelativeLayout adLayout;
-
-	private ServiceConnection mServiceConn;
-
-	private AlertDialog.Builder closeAdsDialog;
-
-
 	/**
 	 * Actions
 	 */
@@ -95,9 +86,7 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		firstRun();
 		super.onCreate(savedInstanceState);
-		styleActionBar();
 
-		adLayout = (RelativeLayout) findViewById(R.id.adLayout);
 		replyButton = (Button) findViewById(R.id.replyButton);
 		replyButton.setOnClickListener(this);
 		replyEditText = (EditText) findViewById(R.id.replyEditText);
@@ -120,43 +109,12 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	public void ads(boolean display) {
 
 		if (!display) {
-			adLayout.setVisibility(RelativeLayout.GONE);
 			menu.findItem(R.id.remove_ads).setVisible(false);
 			timer.cancel();
 			return;
 		}
 
 		menu.findItem(R.id.remove_ads).setVisible(true);
-
-		if (this.closeAdsDialog == null) {
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-			alert.setTitle("作者的話");
-			alert.setMessage("親愛的 EPC 巴打您好\n\n" +
-				"感謝您地一直支持 EPC APP。" +
-				"作者可是花了很多時間製作這個程式給一眾巴打使用。" +
-				"如覺得好用，不妨用一支汽水嘅價錢 (HKD 9.9) 支持下小弟！支持小弟繼續開展下去！" +
-				"\n\nLouisLam 上");
-
-			alert.setNegativeButton("永久移除廣告", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-
-				}
-			});
-
-			alert.setPositiveButton("暫時隱藏 (諗下先)", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					adLayout.setVisibility(RelativeLayout.GONE);
-				}
-			});
-
-			closeAdsDialog = alert;
-		}
-
-		// 查詢 LinearLayout (假設您已經提供)
-		// 屬性是 android:id="@+id/mainLayout"
-		final RelativeLayout layout = adLayout;
 
 		Set<String> keywords = new TreeSet<String>();
 		keywords.add("電腦");
@@ -173,15 +131,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		keywords.add("顯卡");
 		keywords.add("game");
 
-		closeAdButton = (Button) findViewById(R.id.button_close_ad);
-		closeAdButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				closeAdsDialog.show();
-			}
-		});
-
-		adLayout.setVisibility(RelativeLayout.VISIBLE);
 		timer.schedule(new timerTask(), 900000);
 	}
 
@@ -196,7 +145,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 		public void run() {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					adLayout.setVisibility(RelativeLayout.VISIBLE);
 					timer.schedule(new timerTask(), 900000);
 				}
 			});
@@ -346,22 +294,6 @@ public class MainActivity extends HKEPC implements OnClickListener {
 	public void hidePanel() {
 		if (panel.getVisibility() == LinearLayout.VISIBLE)
 			panel.setVisibility(LinearLayout.GONE);
-	}
-
-
-	/**
-	 * For Android 4.0 only
-	 */
-	public void styleActionBar() {
-		var bar = this.getSupportActionBar();
-
-		if (bar != null) {
-			bar.setIcon(R.drawable.ic_launcher);
-			ColorDrawable cd = new ColorDrawable();
-			cd.setColor(Color.rgb(142, 195, 31));
-			bar.setBackgroundDrawable(cd);
-			bar.setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override
