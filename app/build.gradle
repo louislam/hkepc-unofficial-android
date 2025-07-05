@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 36
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "net.louislam.hkepc"
         minSdkVersion 17
-        targetSdkVersion 36
-        versionCode 40
-        versionName "1.7.1"
+        targetSdkVersion 33
+        versionCode 39
+        versionName "1.7.0"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -27,7 +27,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    namespace 'net.louislam.hkepc'
 }
 
 dependencies {
