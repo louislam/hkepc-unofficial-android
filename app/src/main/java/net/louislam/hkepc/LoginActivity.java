@@ -1,6 +1,8 @@
 package net.louislam.hkepc;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
@@ -54,23 +56,36 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 			try {
 				doc = res.parse();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Element alert = doc.select(".alert_info").first();
-			
-			if (alert != null && alert.text().contains("歡迎您回來")) {
-				HKEPC.setCookies(res.cookies(), this);
-				isOk = true;
+
+			if (doc != null) {
+				Element alert = doc.select(".alert_info").first();
+				if (alert == null) {
+					alert = doc.select(".alert_error").first();
+				}
+
+				if (alert != null) {
+					if (alert.text().contains("歡迎您回來")) {
+						HKEPC.setCookies(res.cookies(), this);
+						isOk = true;
+					}
+
+					msg = alert.text();
+				} else {
+					msg = "登入失敗，請重試。";
+				}
+			} else {
+				msg = "登入失敗，無法讀取伺服器回應。";
 			}
-			
-			msg = alert.text();
 		}
 		
 		if (isOk) {
 			setResult(RESULT_OK);
 			this.finish();
 		} else {
+			button.setEnabled(true);
+			button.setText("登入");
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.setMessage(msg);
 			dialog.show();
@@ -88,12 +103,38 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 			
 			Connection.Response res = null;
 			try {
+				// Discuz requires the formhash/loginsid of the login form and its session cookies
+				Connection.Response loginPage = Jsoup.connect(HKEPC.URL + "logging.php?action=login")
+						.userAgent(HKEPC.USER_AGENT)
+						.method(Method.GET)
+						.timeout(20000)
+						.execute();
+				
+				Document doc = loginPage.parse();
+				Element form = doc.select("#loginform").first();
+				String formhash = doc.select("input[name=formhash]").first().val();
+				String loginsid = form.select("input[name=loginsid]").first().val();
+				
 				res = Jsoup.connect(HKEPC.URL + page)
+						    .userAgent(HKEPC.USER_AGENT)
+						    .cookies(loginPage.cookies())
+						    .data("formhash", formhash, "loginsid", loginsid)
+						    .data("referer", "", "loginfield", "username")
 						    .data("username", strs[0], "password", strs[1])
+						    .data("questionid", "0", "answer", "")
 						    .method(Method.POST)
 							.timeout(0)
 						    .execute();
+				
+				// Keep the pre-login cookies (e.g. auth) as well
+				Map<String, String> cookies = new HashMap<String, String>(loginPage.cookies());
+				cookies.putAll(res.cookies());
+				res.cookies().clear();
+				res.cookies().putAll(cookies);
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (RuntimeException e) {
+				// The login form is missing (site changed or blocked)
 				e.printStackTrace();
 			}
 			

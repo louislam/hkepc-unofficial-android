@@ -73,6 +73,9 @@ public abstract class HKEPC extends AppCompatActivity {
 	
 	/** Default base url */
 	public final static String URL = "https://www.hkepc.com/forum/";
+
+	/** HKEPC blocks jsoup's default (Chrome-like) user agent with 403 */
+	public final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:158.0) Gecko/20100101 Firefox/158.0";
 	
 	/** WebView */
 	protected WebView webView;
@@ -434,9 +437,9 @@ public abstract class HKEPC extends AppCompatActivity {
 
 			try {
 				if (HKEPC.getCookies(HKEPC.this) != null) {
-					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this)).timeout(20000);
+					conn = Jsoup.connect(url).cookies(HKEPC.getCookies(HKEPC.this)).userAgent(HKEPC.USER_AGENT).timeout(20000);
 				} else {
-					conn = Jsoup.connect(url).timeout(20000);
+					conn = Jsoup.connect(url).userAgent(HKEPC.USER_AGENT).timeout(20000);
 				}
 				returnObjs[0] = conn.get();
 
@@ -477,6 +480,7 @@ public abstract class HKEPC extends AppCompatActivity {
 			
 			try {
 				res = Jsoup.connect(HKEPC.URL + page)
+						.userAgent(HKEPC.USER_AGENT)
 						.cookies(HKEPC.getCookies(HKEPC.this))
 						.data("message", msg, "formhash", formHash)
 						.method(Method.POST)

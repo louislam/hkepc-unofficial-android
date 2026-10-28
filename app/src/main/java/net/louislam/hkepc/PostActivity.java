@@ -100,6 +100,7 @@ public class PostActivity extends AppCompatActivity implements OnClickListener {
 			Connection.Response res = null;
 			try {
 				res = Jsoup.connect(HKEPC.URL + data[0].get("postLink"))
+						    .userAgent(HKEPC.USER_AGENT)
 						    .data(data[0]).cookies(HKEPC.getCookies(PostActivity.this))
 						    .method(Method.POST)
 							.ignoreHttpErrors(true)
